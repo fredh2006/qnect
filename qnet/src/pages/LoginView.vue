@@ -14,7 +14,10 @@
         <label for="password">Password</label>
         <input v-model="password" type="password" placeholder="********" name="password" />
       </div>
-      <button type="submit" @click="register">Login</button>
+      <button type="submit" @click="login">Login</button>
+      <div v-if="showError" class="error-message">
+        {{ errorMessage }}
+      </div>
     </div>
   </div>
 </template>
@@ -26,13 +29,30 @@ export default {
     return {
       email: '',
       password: '',
+      showError: false, // Controls visibility of error message
+      errorMessage: '', // Stores the error message to be displayed
     }
   },
   methods: {
-    register() {
-        sessionStorage.setItem('email', this.email)
-        sessionStorage.setItem('password', this.password)
-        this.$router.push('/profile')
+    async login() {
+      axios.get(`http://localhost:3000/api/person/email/${this.email}`)
+    .then(response => {
+      if (response.data.success) {
+        console.log('User data:', response.data.person);
+        if (this.password == response.data.person.password){
+          console.log('logged in')
+          this.$router.push('/dashboard')
+        }else{
+          this.showError = true;
+          this.errorMessage = "Wrong password";
+        }
+      } else {
+        console.log('No user found with that email');
+      }
+    })
+    .catch(err => {
+      console.error('Error fetching user:', err);
+    });
     }
   }
 }

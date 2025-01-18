@@ -30,7 +30,7 @@ const personSchema = new mongoose.Schema({
   age: { type: Number, required: true },
   location: { type: String, required: true },
   questions: { type: Map, of: String, required: true },
-  email: { unique: true, type: String, required: true},
+  email: {unique: true, type: String, required: true},
   password: { type: String, required: true },
   likes: { type: [String], default: [] },
   matches: { type: [String], default: [] },
@@ -46,13 +46,25 @@ app.post("/api/person", (req, res) => {
     return res.status(400).send({ success: false, message: "All fields are required." });
   }
 
-  const newPerson = new Person({ name, about, social_media, sexuality, gender, age, location, questions, email, password, likes, matches});
+  Person.findOne({ email: email })
+    .then(existingPerson => {
+      if (existingPerson) {
+        // If email is already registered, return an error message
+        return res.status(400).send({ success: false, message: "This email is already registered." });
+      }
 
-  newPerson.save()
+      // If email is not taken, create the new person
+      const newPerson = new Person({ name, about, social_media, sexuality, gender, age, location, questions, email, password, likes, matches });
+
+      // Save the new person to the database
+      return newPerson.save();
+    })
     .then(savedPerson => {
+      // Send a success response after the person is saved
       res.status(200).send({ success: true, message: "Person created successfully", person: savedPerson });
     })
     .catch(err => {
+      // Handle errors during the process
       res.status(500).send({ success: false, message: "Error saving person", error: err });
     });
 });
@@ -80,6 +92,35 @@ app.get("/api/person/:id", (req, res) => {
       res.status(500).send({ success: false, message: "Error retrieving person", error: err });
     });
 });
+
+app.get("/api/emails", (req, res) => {
+  // Query the database to get all email addresses from the Person collection
+  Person.find({}, 'email') // Find all documents and return only the 'email' field
+    .then(people => {
+      const emails = people.map(person => person.email); // Extract emails from the documents
+      res.status(200).send({ success: true, emails });
+    })
+    .catch(err => {
+      res.status(500).send({ success: false, message: "Error retrieving emails", error: err });
+    });
+});
+
+app.get("/api/person/email/:email", (req, res) => {
+  const email = req.params.email;
+
+  // Use MongoDB's findOne to fetch a person by email
+  Person.findOne({ email: email })
+    .then(person => {
+      if (!person) {
+        return res.status(404).send({ success: false, message: "Person not found with that email" });
+      }
+      res.status(200).send({ success: true, person });
+    })
+    .catch(err => {
+      res.status(500).send({ success: false, message: "Error retrieving person by email", error: err });
+    });
+});
+
 
 app.post("/api/person/:id/match", (req, res) => {
     const personId = req.params.id;

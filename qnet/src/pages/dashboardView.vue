@@ -3,6 +3,6 @@
 
 <template>
 <div>
-  Login
+  Logged in
 </div>
 </template>
