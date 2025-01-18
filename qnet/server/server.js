@@ -228,6 +228,18 @@ app.get("/api/people/location/:location/user/:userId", async (req, res) => {
         res.status(500).send({ success: false, message: "Error retrieving person by email", error: err });
       });
   });
+
+  app.get("/api/emails", (req, res) => {
+    // Query the database to get all email addresses from the Person collection
+    Person.find({}, 'email') // Find all documents and return only the 'email' field
+      .then(people => {
+        const emails = people.map(person => person.email); // Extract emails from the documents
+        res.status(200).send({ success: true, emails });
+      })
+      .catch(err => {
+        res.status(500).send({ success: false, message: "Error retrieving emails", error: err });
+      });
+  });
   
   
 app.listen(PORT, () => {
