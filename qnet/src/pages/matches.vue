@@ -39,8 +39,18 @@
   
         <!-- Carousel Navigation (Buttons) -->
         <div class="carousel-buttons">
-          <button class="carousel-arrow left-arrow" @click="moveCarousel('left')">&#8592;</button>
-          <button class="carousel-arrow right-arrow" @click="moveCarousel('right')">&#8594;</button>
+          <button
+            class="carousel-arrow left-arrow"
+            @click="moveCarousel('left')"
+          >
+            &#8592;
+          </button>
+          <button
+            class="carousel-arrow right-arrow"
+            @click="moveCarousel('right')"
+          >
+            &#8594;
+          </button>
         </div>
       </div>
   
@@ -207,20 +217,22 @@
     display: flex;
     justify-content: space-between;
     transform: translateY(-50%);
-    pointer-events: none; /* Allow clicks to go through */
+    padding:20px;
   }
   
   .carousel-arrow {
+    
     background-color: #FF6C64;
     color: white;
     font-size: 24px;
     border: none;
-    padding: 10px;
+    width: 50px; /* Set a fixed width */
+    height: 50px; /* Set a fixed height */
+    padding: 0; /* Remove padding */
     cursor: pointer;
     border-radius: 50%; /* Circular button */
-    pointer-events: auto; /* Enable pointer events on the buttons */
-    z-index: 1;
     transition: background-color 0.3s ease;
+    z-index: 1;
   }
   
   .carousel-arrow:hover {
@@ -238,7 +250,7 @@
   .indicator {
     width: 12px;
     height: 12px;
-    background-color: #FF6C64;
+    background-color: #bbb;
     border-radius: 50%;
     cursor: pointer;
   }
@@ -261,3 +273,4 @@
     opacity: 0;
   }
   </style>
+  
