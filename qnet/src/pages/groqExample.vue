@@ -66,7 +66,15 @@ export default {
   max-width: 600px;
   margin: 0 auto;
   font-family: Arial, sans-serif;
+
+  /* Center the component */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  min-height: 100vh; /* Full viewport height */
 }
+
 
 .chat-container {
   border: 1px solid #ddd;
@@ -92,26 +100,34 @@ export default {
 .chat-input {
   display: flex;
   margin-top: 10px;
+  gap: 5px; /* Adds space between the input and button */
+  width: 100%; /* Ensure it spans the entire width of the container */
 }
 
 .chat-input input {
-  flex: 1;
+  flex: 0 0 75%; /* Fixed 75% width */
   padding: 10px;
   border: 1px solid #ddd;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px; /* Fully rounded corners */
   outline: none;
+  box-sizing: border-box; /* Ensures padding doesn't exceed the width */
 }
 
 .chat-input button {
-  padding: 10px 20px;
+  flex: 0 0 24%; /* Fixed 25% width */
+  padding: 10px;
   border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 0 5px 5px 0;
+  background-color: rgba(27, 38, 59, 1);
+  color: #ff6f61;
+  border-radius: 5px; /* Fully rounded corners */
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .chat-input button:hover {
-  background-color: #0056b3;
+  background-color:  rgb(81, 87, 98);
+
 }
+
+
 </style>

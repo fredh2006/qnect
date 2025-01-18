@@ -1,6 +1,6 @@
 import Groq from "groq-sdk";
 
-const groq = new Groq({ apiKey: "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", dangerouslyAllowBrowser: true, });
+const groq = new Groq({ apiKey: "", dangerouslyAllowBrowser: true, });
 
 export async function getGroqResponse(prompt) {
   try {
