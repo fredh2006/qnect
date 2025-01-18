@@ -21,6 +21,7 @@ app.use(cors());
 
 const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
+  about: { type: String, required: true },
   sexuality: { type: String, required: true },
   gender: { type: String, required: true },
   age: { type: Number, required: true },
@@ -28,6 +29,8 @@ const personSchema = new mongoose.Schema({
   questions: { type: Map, of: String, required: true }, // Changed questions to a dictionary
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  id: { type: Number, required: true },
+
 });
 
 const Person = mongoose.model("Person", personSchema);
@@ -49,6 +52,30 @@ app.post("/api/person", (req, res) => {
       res.status(500).send({ success: false, message: "Error saving person", error: err });
     });
 });
+
+app.get("/api/people", (req, res) => {
+    Person.find()
+      .then(people => {
+        res.status(200).send({ success: true, people });
+      })
+      .catch(err => {
+        res.status(500).send({ success: false, message: "Error retrieving people", error: err });
+      });
+  });
+
+app.get("/api/person/:id", (req, res) => {
+    const personId = req.params.id;
+    Person.findById(personId)
+      .then(person => {
+        if (!person) {
+          return res.status(404).send({ success: false, message: "Person not found" });
+        }
+        res.status(200).send({ success: true, person });
+      })
+      .catch(err => {
+        res.status(500).send({ success: false, message: "Error retrieving person", error: err });
+      });
+  });
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
