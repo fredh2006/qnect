@@ -1,0 +1,56 @@
+.header {
+    align-items: center;
+    background-color: var(--color-background-default-default);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-color: var(--color-border-default-default);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-space-600);
+    padding: var(--size-space-800);
+    position: relative;
+    width: var(--responsive-device-width);
+  }
+  
+  .header .block {
+    flex: 0 0 auto;
+    margin-bottom: -1.75px;
+    margin-top: -1.75px;
+    position: relative;
+  }
+  
+  .header .navigation-pill-list {
+    align-items: flex-start;
+    display: flex;
+    flex: 1;
+    flex-grow: 1;
+    flex-wrap: wrap;
+    gap: var(--size-space-200);
+    justify-content: flex-end;
+    position: relative;
+  }
+  
+  .header .navigation-pill-2 {
+    border-radius: var(--size-radius-200);
+    flex: 0 0 auto;
+    gap: var(--size-space-200);
+    position: relative;
+  }
+  
+  .header .navigation-pill-instance {
+    flex: 0 0 auto !important;
+  }
+  
+  .header .header-auth-instance {
+    background-color: var(--variable-collection-accent) !important;
+    border-color: var(--variable-collection-accent) !important;
+  }
+  
+  .header .design-component-instance-node {
+    color: var(--variable-collection-secondary) !important;
+  }
+  
+  .header .header-auth-2 {
+    color: var(--variable-collection-accent) !important;
+  }
+  

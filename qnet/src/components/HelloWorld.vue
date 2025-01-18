@@ -8,7 +8,7 @@ defineProps({
 const count = ref(0)
 </script>
 
-<template>
+<!-- <template>
   <h1>{{ msg }}</h1>
 
   <div class="card">
@@ -40,4 +40,4 @@ const count = ref(0)
 .read-the-docs {
   color: #888;
 }
-</style>
+</style> -->
