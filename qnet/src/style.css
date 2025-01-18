@@ -11,9 +11,21 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --color-background-neutral-tertiary: #f0f0f0;
+  --color-border-neutral-secondary: #d0d0d0;
+  --color-text-default-default: #000000;
+  --color-background-brand-default: #007bff;
+  --color-border-brand-default: #0056b3;
+  --color-text-brand-on-brand: #ffffff;
+  --size-radius-200: 8px;
+  --size-space-200: 16px;
+  --size-space-300: 24px;
+  --size-icon-large: 40px;
+
+
 }
 
-a {
+/* a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
@@ -56,7 +68,7 @@ button:focus-visible {
 
 .card {
   padding: 2em;
-}
+} */
 
 #app {
   max-width: 1280px;
@@ -77,3 +89,5 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
