@@ -30,7 +30,7 @@ const personSchema = new mongoose.Schema({
   age: { type: Number, required: true },
   location: { type: String, required: true },
   questions: { type: Map, of: String, required: true },
-  email: { type: String, required: true},
+  email: { unique: true, type: String, required: true},
   password: { type: String, required: true },
   likes: { type: [String], default: [] },
   matches: { type: [String], default: [] },
@@ -112,56 +112,82 @@ app.post("/api/person/:id/match", (req, res) => {
   app.post("/api/person/:id/like", (req, res) => {
     const personId = req.params.id;
     const { likedId } = req.body;
-  
+
+    console.log(`Person ID: ${personId}, Liked ID: ${likedId}`);
+
     if (!likedId) {
-      return res.status(400).send({ success: false, message: "Liked ID is required" });
+        return res.status(400).send({ success: false, message: "Liked ID is required" });
     }
-  
+
+    // First, find the person who is liking
     Person.findById(personId)
-      .then(person => {
-        if (!person) {
-          return res.status(404).send({ success: false, message: "Person not found" });
-        }
-  
-        if (!person.likes.includes(likedId)) {
-          person.likes.push(likedId);
-        }
-  
-        return person.save().then(() => {
-          return Person.findById(likedId);
+        .then(person => {
+            if (!person) {
+                console.log(`Person with ID ${personId} not found`);
+                return res.status(404).send({ success: false, message: "Person not found" });
+            }
+
+            // Add the likedId to the current person's likes if not already present
+            if (!person.likes.includes(likedId)) {
+                person.likes.push(likedId);
+                console.log(`Liked person ID ${likedId} added to ${personId}'s likes`);
+            }
+
+            // Save the person after liking the other
+            return person.save();
+        })
+        .then(updatedPerson => {
+            // Now, find the liked person to check if they also liked the original person
+            return Person.findById(likedId).then(likedPerson => {
+                if (!likedPerson) {
+                    console.log(`Liked person with ID ${likedId} not found`);
+                    return res.status(404).send({ success: false, message: "Liked person not found" });
+                }
+
+                // Check if the liked person has also liked the original person (mutual like)
+                if (likedPerson.likes.includes(updatedPerson._id)) {
+                    console.log(`Mutual like found between ${updatedPerson._id} and ${likedPerson._id}`);
+
+                    // Both users like each other, so add them to each other's matches
+                    if (!likedPerson.matches.includes(updatedPerson._id)) {
+                        likedPerson.matches.push(updatedPerson._id);
+                    }
+                    if (!updatedPerson.matches.includes(likedPerson._id)) {
+                        updatedPerson.matches.push(likedPerson._id);
+                    }
+
+                    // Save both people after adding them to each other's matches
+                    return Promise.all([likedPerson.save(), updatedPerson.save()]);
+                }
+
+                // No mutual like, so just return the updated person
+                return updatedPerson;
+            });
+        })
+        .then(() => {
+            console.log(`Like processed successfully`);
+            res.status(200).send({ success: true, message: "Like processed successfully" });
+        })
+        .catch(err => {
+            console.log("Error in like process:", err);
+            res.status(500).send({ success: false, message: "Error processing like", error: err });
         });
-      })
-      .then(likedPerson => {
-        if (!likedPerson) {
-          return res.status(404).send({ success: false, message: "Liked person not found" });
-        }
+});
+
+
   
-        if (likedPerson.likes.includes(personId)) {
-          if (!likedPerson.matches.includes(personId)) {
-            likedPerson.matches.push(personId);
-          }
-          return likedPerson.save().then(() => {
-            return Person.findById(personId);
-          });
-        }
-        return Person.findById(personId);
-      })
-      .then(person => {
-        if (!person) {
-          return res.status(404).send({ success: false, message: "Person not found during final save" });
-        }
+  app.get("/api/people/location/:location", (req, res) => {
+    const location = req.params.location;
   
-        if (!person.matches.includes(likedId)) {
-          person.matches.push(likedId);
+    Person.find({ location: { $regex: new RegExp(location, "i") } })
+      .then(people => {
+        if (people.length === 0) {
+          return res.status(404).send({ success: false, message: "No people found for the specified location" });
         }
-  
-        return person.save();
-      })
-      .then(updatedPerson => {
-        res.status(200).send({ success: true, message: "Like processed successfully", person: updatedPerson });
+        res.status(200).send({ success: true, people });
       })
       .catch(err => {
-        res.status(500).send({ success: false, message: "Error processing like", error: err });
+        res.status(500).send({ success: false, message: "Error retrieving people by location", error: err });
       });
   });
   

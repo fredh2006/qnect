@@ -43,9 +43,13 @@
 
 
   <script>
+<<<<<<< HEAD
 
 
 
+=======
+  import axios from 'axios'
+>>>>>>> 6dd0eea355d8f036df02d8b05d932a7e47bf3b19
   export default {
     data() {
       return {
@@ -55,29 +59,9 @@
     },
     methods: {
       register() {
-        const axios = require('axios');
-        let data = JSON.stringify({
-          "email": this.email,
-          "password": this.password,
-        });
-  
-        let config = {
-          method: 'post',
-          maxBodyLength: Infinity,
-          url: 'http://localhost:3000/api/person',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data: data
-        };
-  
-        axios.request(config)
-          .then((response) => {
-            console.log(JSON.stringify(response.data));
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+          sessionStorage.setItem('email', this.email)
+          sessionStorage.setItem('password', this.password)
+          this.$router.push('/profile')
       }
     }
   }
@@ -87,8 +71,6 @@
 
   *, *:before, *:after {
     box-sizing: border-box;
-    margin-left:-10px;
-    margin-top:-10px;
   }
   #input{
     width: 300px !important;
@@ -143,22 +125,22 @@
   .top {
     &:before {
       transform: rotate(45deg);
-      background: #FF6C64; /* Coral Red */
+      background: #FFF; /* Coral Red */
     }
     &:after {
       transform: rotate(135deg);
-      background: #FFB79A; /* Soft Peach */
+      background:#ff6c64; /* Soft Peach */
     }
   }
 
   .bottom {
     &:before {
       transform: rotate(-45deg);
-      background: #B3A0D1; /* Lavender */
+      background: #ff6c64; /* Lavender */
     }
     &:after {
       transform: rotate(-135deg);
-      background: #A7E6D7; /* Soft Mint */
+      background: #FFF;; /* Soft Mint */
     }
   }
 

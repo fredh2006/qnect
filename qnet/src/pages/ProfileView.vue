@@ -24,6 +24,10 @@
     <input v-model="about" type="text" placeholder="e.g. John Smith" name="about" />
   </div>
   <div>
+    <label for="social_media">Social Media</label>
+    <input v-model="social_media" type="text" placeholder="e.g. John Smith" name="social_media" />
+  </div>
+  <div>
     <!-- Display previously added questions with answers -->
     <div v-for="(item, index) in questionInputs" :key="index" class="question-input">
       <label for="question">Select a question:</label>
@@ -72,6 +76,7 @@ export default {
       age: '',
       location: '',
       about: '',
+      social_media: '',
       questions: [
 "What does love mean to you in one sentence?",
 "Which values do you hold above all else?",
@@ -157,14 +162,14 @@ export default {
       let data = JSON.stringify({
         "name": this.name,
         "about": this.about,
-        "social_media": "@fredhe",
+        "social_media": this.social_media,
         "sexuality": this.sexuality,
         "gender": this.gender,
         "age": number_age,
         "location": this.location,
         "questions": QTA,
-        "email": "test3",
-        "password": "test",
+        "email": sessionStorage.getItem('email'),
+        "password": sessionStorage.getItem('password'),
         "matches": [],
         "likes": [],
       });
