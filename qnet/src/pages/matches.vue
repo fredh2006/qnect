@@ -97,25 +97,34 @@
           });
       },
       likePerson(likedId) {
-        axios
-          .post(`http://localhost:3000/api/person/${this.userId}/like`, {
-            likedId,
-          })
-          .then((response) => {
-            if (response.data.success) {
-              this.notification = "You liked someone!";
-              setTimeout(() => {
-                this.notification = "";
-              }, 3000);
-            } else {
-              console.error("Error liking person:", response.data.message);
-            }
-          })
-          .catch((error) => {
-            console.error("Error liking person:", error);
-          });
-      },
-  
+  axios
+    .post(`http://localhost:3000/api/person/${this.userId}/like`, {
+      likedId,
+    })
+    .then((response) => {
+      if (response.data.success) {
+        this.notification = "You liked someone!";
+        // Remove the liked person from the carousel
+        this.people = this.people.filter(person => person._id !== likedId);
+        
+        // Adjust the currentIndex to stay within bounds
+        if (this.currentIndex >= this.people.length) {
+          this.currentIndex = Math.max(0, this.people.length - 1);
+        }
+
+        // Clear notification after 3 seconds
+        setTimeout(() => {
+          this.notification = "";
+        }, 3000);
+      } else {
+        console.error("Error liking person:", response.data.message);
+      }
+    })
+    .catch((error) => {
+      console.error("Error liking person:", error);
+    });
+},
+
       moveCarousel(direction) {
         if (direction === "left") {
           if (this.currentIndex > 0) {
