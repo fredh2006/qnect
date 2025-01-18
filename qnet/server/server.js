@@ -32,7 +32,7 @@ const personSchema = new mongoose.Schema({
   age: { type: Number, required: true },
   location: { type: String, required: true },
   questions: { type: Map, of: String, required: true },
-  email: { type: String, required: true, unique: true },
+  email: { type: String, required: true},
   password: { type: String, required: true },
   matches: { type: [Number], default: [] }, // List of matched person IDs
 });
