@@ -22,6 +22,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(bodyParser.json());
 app.use(cors());
 
+// Updated personSchema with a matches array
 const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
   about: { type: String, required: true },
@@ -33,19 +34,19 @@ const personSchema = new mongoose.Schema({
   questions: { type: Map, of: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  id: { type: Number, required: true },
+  matches: { type: [Number], default: [] }, // List of matched person IDs
 });
 
 const Person = mongoose.model("Person", personSchema);
 
 app.post("/api/person", (req, res) => {
-  const { name, about, social_media, sexuality, gender, age, location, questions, email, password, id } = req.body;
+  const { name, about, social_media, sexuality, gender, age, location, questions, email, password, matches } = req.body;
 
-  if (!name || !about || !social_media || !sexuality || !gender || !age || !location || !questions || !email || !password || !id) {
+  if (!name || !about || !social_media || !sexuality || !gender || !age || !location || !questions || !email || !password || !matches) {
     return res.status(400).send({ success: false, message: "All fields are required." });
   }
 
-  const newPerson = new Person({ name, about, social_media, sexuality, gender, age, location, questions, email, password, id });
+  const newPerson = new Person({ name, about, social_media, sexuality, gender, age, location, questions, email, password, matches});
 
   newPerson.save()
     .then(savedPerson => {
@@ -79,6 +80,36 @@ app.get("/api/person/:id", (req, res) => {
       res.status(500).send({ success: false, message: "Error retrieving person", error: err });
     });
 });
+
+app.post("/api/person/:id/match", (req, res) => {
+    const personId = req.params.id; // Get person ID from the URL parameter
+    const { matchId } = req.body; // Get match ID from the request body
+  
+    if (!matchId) {
+      return res.status(400).send({ success: false, message: "Match ID is required" });
+    }
+  
+    Person.findById(personId)
+      .then(person => {
+        if (!person) {
+          return res.status(404).send({ success: false, message: "Person not found" });
+        }
+  
+        // Add matchId to the person's matches array if not already present
+        if (!person.matches.includes(matchId)) {
+          person.matches.push(matchId);
+        }
+  
+        return person.save();
+      })
+      .then(updatedPerson => {
+        res.status(200).send({ success: true, message: "Match added successfully", person: updatedPerson });
+      })
+      .catch(err => {
+        res.status(500).send({ success: false, message: "Error adding match", error: err });
+      });
+  });
+  
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
