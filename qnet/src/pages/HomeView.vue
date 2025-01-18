@@ -1,286 +1,168 @@
 <template>
-  <main class="dashboard-container" role="main">
-    <header class="header-nav" role="banner">
-      <img
-        loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/d8b11bede3620921516c0a3e35d8b5bab2338ed9ccb42824992b410b5b13f263?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-        class="logo"
-        alt="Company logo"
-      />
-      <div class="search-wrapper">
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/e2ddc37808ff9ec54d2842258b667489298a7e8ad45a8bbdf05ebe418eff509d?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-          class="search-icon"
-          alt=""
-        />
-        <span class="search-text">search</span>
-      </div>
-      <img
-        loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/043020189a272e6371a31ecc1984b07f7bf186be1b974455242225535d63354b?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-        class="profile-avatar"
-        alt="User profile"
-      />
-    </header>
-
-    <h1 class="page-title">Dashboard</h1>
-
-    <section class="content-wrapper">
-      <nav class="navigation" role="navigation">
-        <ul class="nav-list">
-          <li>Explore</li>
-          <li>Matches</li>
-          <li>ChatBot</li>
-        </ul>
-      </nav>
-
-      <article class="profile-card">
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe89f428d0eaa2d01668327191455af5f32e659d53a6d4976ed5f8d81a1ad418?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-          class="profile-image"
-          alt="Profile photo"
-        />
-        <div class="profile-details">
-          <h2 class="profile-name">**Name**</h2>
-          <p class="profile-age">**Age**</p>
-          <p class="profile-location">**location**</p>
-          
-          <div class="questions-section">
-            <h3 class="question">Question 1:</h3>
-            <h3 class="question">Question 2:</h3>
-            <h3 class="question">Question 3:</h3>
-          </div>
-
-          <div class="action-buttons">
-            <button class="action-btn" aria-label="Like profile">
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/3f804a074393477b38a3b92d07c0add50c56078088316b7abf3b4c1765adbb26?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-                alt=""
-              />
-            </button>
-            <button class="action-btn" aria-label="Super like profile">
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/c6eb005298e4e6df62ff3c428f0c121deab30b21b417ab7ceadeaae701f64035?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-                alt=""
-              />
-            </button>
-            <button class="action-btn" aria-label="Pass profile">
-              <img
-                loading="lazy"
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/2fef519408a457b8ad442a1c5c99453ff58f3724a461c73bbee37e611a757426?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-                alt=""
-              />
-            </button>
-          </div>
+  <header class="nav-header" role="banner">
+    <nav class="nav-container" role="navigation" aria-label="Main navigation">
+      <div class="logo-container">
+        <div class="logo-wrapper">
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/ae2d83d4d3e8b13caf1a5b074e86f5725406e34effba8ffd87bfe5f0c8e7e457?placeholderIfAbsent=true&apiKey=3c4b34a732e840c294b3a88a3f1fd290"
+            class="logo-image"
+            alt="Company Logo"
+          />
         </div>
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/4e2c8487e0e06b661827b7d752d928b8e5a5ff3428cd8b61acffb422744390ec?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-          class="profile-badge"
-          alt=""
-        />
-      </article>
+      </div>
+      
+      <ul class="nav-links" role="menubar">
+        <li role="none">
+          <a href="#" class="nav-item" role="menuitem" tabindex="0">Home</a>
+        </li>
+        <li role="none">
+          <a href="#" class="nav-item" role="menuitem" tabindex="0">About</a>
+        </li>
+        <li role="none">
+          <a href="#" class="nav-item active" role="menuitem" tabindex="0">Our Mission</a>
+        </li>
+      </ul>
+
+      <div class="auth-buttons">
+        <button class="sign-in-btn" tabindex="0">Sign in</button>
+        <button class="register-btn bold-text" tabindex="0">Register</button>
+      </div>
+    </nav>
+  </header>
+  <main class="hero-section" role="main">
+    <section class="content-wrapper">
+      <h1 class="main-title">Qnect</h1>
+      <p class="tagline">No Photos, Just Chemistry.</p>
     </section>
+    <div class="action-wrapper">
+      <button 
+        class="primary-button bold-text" 
+        @click="handleStart"
+        tabindex="0"
+        role="button"
+        aria-label="Start Your Journey">
+        Start Your Journey
+      </button>
+    </div>
   </main>
 </template>
 
+<script>
+export default {
+  name: 'HeroSection',
+  methods: {
+    handleStart() {
+      this.$emit('start-journey')
+    }
+  }
+}
+</script>
+
 <style scoped>
-.dashboard-container {
-  background: rgba(255, 108, 100, 1);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  align-items: start;
-  padding: 8px 8px 28px 0;
+.nav-header {
+  background: #fff;
+  border-bottom: 1px solid #d9d9d9;
 }
 
-.header-nav {
-  align-self: stretch;
+.nav-container {
   display: flex;
-  width: 100%;
   align-items: center;
-  gap: 20px;
-  color: #fff;
-  justify-content: space-between;
-  font: 400 40px Katibeh, sans-serif;
+  gap: 24px;
+  padding: 32px;
 }
 
-.logo {
-  aspect-ratio: 3.68;
-  object-fit: contain;
-  width: 173px;
-  align-self: stretch;
-}
-
-.search-wrapper {
+.logo-container {
   display: flex;
-  align-items: start;
-  gap: 5px;
+  align-items: center;
+  gap: 24px;
+  width: 40px;
 }
 
-.search-icon {
-  aspect-ratio: 1;
+.logo-wrapper {
+  display: flex;
+  width: 40px;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-image {
+  aspect-ratio: 0.69;
   object-fit: contain;
   width: 24px;
-  margin-top: 6px;
 }
 
-.profile-avatar {
-  aspect-ratio: 1;
-  object-fit: contain;
-  width: 76px;
-  border-radius: 50%;
-}
-
-.page-title {
-  color: #fff;
-  margin: 33px 0 0 199px;
-  font: 400 74px Katibeh, sans-serif;
-}
-
-.content-wrapper {
+.nav-links {
   display: flex;
-  width: 100%;
-  max-width: 1143px;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 70px 0 0 33px;
-}
-
-.navigation {
-  color: #fff;
-  text-align: center;
-  margin-top: 60px;
-  font: 400 40px/48px Katibeh, sans-serif;
-}
-
-.nav-list {
+  min-width: 240px;
+  align-items: center;
+  gap: 8px;
+  color: var(--sds-color-text-default-default);
+  justify-content: flex-end;
+  flex: 1;
   list-style: none;
-  padding: 0;
-}
-
-.profile-card {
-  display: flex;
-  align-items: center;
-  gap: 40px 44px;
-  flex-wrap: wrap;
-}
-
-.profile-image {
-  aspect-ratio: 1;
-  object-fit: contain;
-  width: 120px;
-  align-self: stretch;
-}
-
-.profile-details {
-  border-radius: 50px;
-  background: rgba(217, 217, 217, 1);
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px 45px 54px;
-}
-
-.profile-name {
-  color: #000;
-  text-align: center;
-  font: 400 36px 'Lily Script One', sans-serif;
   margin: 0;
-}
-
-.profile-age {
-  color: #000;
-  text-align: center;
-  z-index: 10;
-  margin-top: -8px;
-  font: 400 32px Katibeh, sans-serif;
-}
-
-.profile-location {
-  color: #000;
-  text-align: center;
-  font: 400 32px Katibeh, sans-serif;
-}
-
-.question {
-  color: #000;
-  align-self: start;
-  margin-top: 74px;
-  font: 400 26px 'Lily Script One', sans-serif;
-}
-
-.action-buttons {
-  display: flex;
-  margin-top: 84px;
-  width: 405px;
-  max-width: 100%;
-  align-items: start;
-  gap: 20px;
-  justify-content: space-between;
-}
-
-.action-btn {
-  background: none;
-  border: none;
   padding: 0;
+  font: var(--sds-typography-body-font-weight-regular)
+    var(--sds-typography-body-size-medium) / 1
+    var(--sds-typography-body-font-family);
+}
+
+.nav-item {
+  border-radius: 8px;
+  display: flex;
+  min-height: 32px;
+  gap: 8px;
+  padding: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-item.active {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 178px;
+  font: var(--sds-typography-body-font-weight-regular)
+    var(--sds-typography-body-size-medium) / 1
+    var(--sds-typography-body-font-family);
+}
+
+.sign-in-btn {
+  border-radius: 8px;
+  background-color: rgba(255, 111, 97, 1);
+  color: var(--Secondary, #1b263b);
+  flex: 1;
+  padding: 8px;
+  border: 1px solid rgba(255, 111, 97, 1);
   cursor: pointer;
 }
 
-.action-btn img {
-  aspect-ratio: 1;
-  object-fit: contain;
-  width: 72px;
+.register-btn {
+  border-radius: 8px;
+  background-color: rgba(44, 44, 44, 1);
+  color: var(--Accent, #ff6f61);
+  flex: 1;
+  padding: 8px;
+  border: 1px solid rgba(44, 44, 44, 1);
+  cursor: pointer;
 }
 
-.profile-badge {
-  aspect-ratio: 1;
-  object-fit: contain;
-  width: 120px;
-  align-self: stretch;
+.bold-text {
+  font-weight: 700;
 }
 
 @media (max-width: 991px) {
-  .header-nav {
-    max-width: 100%;
-    white-space: initial;
-  }
-
-  .page-title {
-    margin-left: 10px;
-    font-size: 40px;
-  }
-
-  .content-wrapper {
-    max-width: 100%;
-    margin-top: 40px;
-  }
-
-  .navigation {
-    margin-top: 40px;
-  }
-
-  .profile-card {
-    max-width: 100%;
-  }
-
-  .profile-details {
-    max-width: 100%;
+  .nav-container {
     padding: 0 20px;
   }
-
-  .question {
-    margin-top: 40px;
-  }
-
-  .action-buttons {
-    margin-top: 40px;
+  
+  .nav-links {
+    max-width: 100%;
   }
 }
 
@@ -292,6 +174,91 @@
   margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
   border: 0;
+}
+
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 160px 24px;
+}
+
+.content-wrapper {
+  display: flex;
+  width: 412px;
+  max-width: 100%;
+  flex-direction: column;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.main-title {
+  color: var(--Accent, #ff6f61);
+  letter-spacing: -2.16px;
+  font: var(--sds-typography-title-hero-font-weight)
+    var(--sds-typography-title-hero-size)
+    var(--sds-typography-title-hero-font-family);
+}
+
+.tagline {
+  color: var(--Secondary, #1b263b);
+  margin-top: 8px;
+  font: var(--sds-typography-subtitle-font-weight)
+    var(--sds-typography-subtitle-size-base)
+    var(--sds-typography-subtitle-font-family);
+}
+
+.action-wrapper {
+  display: flex;
+  margin-top: 32px;
+  width: 240px;
+  max-width: 100%;
+  align-items: center;
+  gap: 16px;
+  color: #ff6f61;
+  font: var(--sds-typography-body-font-weight-regular)
+    var(--sds-typography-body-size-medium) / 1
+    var(--sds-typography-body-font-family);
+}
+
+.primary-button {
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  background-color: rgba(27, 38, 59, 1);
+  width: 100%;
+  padding: 12px;
+  border: 1px solid rgba(27, 38, 59, 1);
+  color: currentColor;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.primary-button:hover,
+.primary-button:focus {
+  transform: translateY(-2px);
+  outline: 2px solid #ff6f61;
+  outline-offset: 2px;
+}
+
+.primary-button:focus-visible {
+  outline: 3px solid #ff6f61;
+  outline-offset: 2px;
+}
+
+.bold-text {
+  font-weight: 700;
+}
+
+@media (max-width: 991px) {
+  .hero-section {
+    padding: 100px 20px;
+  }
+
+  .main-title {
+    font-size: 40px;
+  }
 }
 </style>
