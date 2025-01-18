@@ -30,7 +30,7 @@ const personSchema = new mongoose.Schema({
   age: { type: Number, required: true },
   location: { type: String, required: true },
   questions: { type: Map, of: String, required: true },
-  email: { type: String, required: true},
+  email: { unique: true, type: String, required: true},
   password: { type: String, required: true },
   likes: { type: [String], default: [] },
   matches: { type: [String], default: [] },

@@ -30,38 +30,9 @@
     },
     methods: {
       register() {
-        let data = JSON.stringify({
-        "name": '',
-        "about": '',
-        "social_media": '',
-        "sexuality": '',
-        "gender": '',
-        "age": '',
-        "location": '',
-        "questions": '',
-        "email": this.email,
-        "password": this.password,
-        "likes": [],
-        "matches": [],
-        });
-  
-        let config = {
-          method: 'post',
-          maxBodyLength: Infinity,
-          url: 'http://localhost:3000/api/person',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          data: data
-        };
-  
-        axios.request(config)
-          .then((response) => {
-            console.log(JSON.stringify(response.data));
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+          sessionStorage.setItem('email', this.email)
+          sessionStorage.setItem('password', this.password)
+          this.$router.push('/profile')
       }
     }
   }
