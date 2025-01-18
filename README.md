@@ -1,3 +1,3 @@
 # qnect
 
-UofTHacks 12 Projects
+UofTHacks 12 Projects!
