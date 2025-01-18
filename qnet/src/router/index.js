@@ -6,7 +6,9 @@ const router = createRouter({
       { path: '/profile', name: 'profile', component: () => import('../pages/ProfileView.vue') },
       { path: '/', name: 'home', component: () => import('../pages/HomeView.vue') },
       { path: '/login', name: 'login', component: () => import('../pages/LoginView.vue') },
-      { path: '/register', name: 'register', component: () =>import('../pages/Register.vue')}
+      { path: '/register', name: 'register', component: () =>import('../pages/Register.vue')}, 
+      { path: '/groq', name: 'groq', component: () =>import('../pages/groqExample.vue')}, 
+
     ]
   })
   
