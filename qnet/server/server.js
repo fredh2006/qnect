@@ -1,4 +1,4 @@
-require("dotenv").config();  // Load environment variables from the .env file
+require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
@@ -6,9 +6,8 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const app = express();
-const PORT = process.env.PORT || 3000;  // Get port from the environment variable, fallback to 3000
+const PORT = process.env.PORT || 3000;
 
-// Use MONGO_URI environment variable
 const mongoURI = process.env.MONGO_URI;
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,7 +21,6 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(bodyParser.json());
 app.use(cors());
 
-// Updated personSchema with a matches array
 const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
   about: { type: String, required: true },
@@ -34,8 +32,9 @@ const personSchema = new mongoose.Schema({
   questions: { type: Map, of: String, required: true },
   email: { type: String, required: true},
   password: { type: String, required: true },
-  likes: { type: [Number], default: [] },
-  matches: { type: [Number], default: [] }, // List of matched person IDs
+  likes: { type: [String], default: [] },
+  matches: { type: [String], default: [] },
+  
 });
 
 const Person = mongoose.model("Person", personSchema);
@@ -83,8 +82,8 @@ app.get("/api/person/:id", (req, res) => {
 });
 
 app.post("/api/person/:id/match", (req, res) => {
-    const personId = req.params.id; // Get person ID from the URL parameter
-    const { matchId } = req.body; // Get match ID from the request body
+    const personId = req.params.id;
+    const { matchId } = req.body;
   
     if (!matchId) {
       return res.status(400).send({ success: false, message: "Match ID is required" });
@@ -96,7 +95,6 @@ app.post("/api/person/:id/match", (req, res) => {
           return res.status(404).send({ success: false, message: "Person not found" });
         }
   
-        // Add matchId to the person's matches array if not already present
         if (!person.matches.includes(matchId)) {
           person.matches.push(matchId);
         }
@@ -110,11 +108,10 @@ app.post("/api/person/:id/match", (req, res) => {
         res.status(500).send({ success: false, message: "Error adding match", error: err });
       });
   });
-  
 
   app.post("/api/person/:id/like", (req, res) => {
-    const personId = req.params.id; // The person who likes someone
-    const { likedId } = req.body; // The person being liked
+    const personId = req.params.id;
+    const { likedId } = req.body;
   
     if (!likedId) {
       return res.status(400).send({ success: false, message: "Liked ID is required" });
@@ -126,13 +123,11 @@ app.post("/api/person/:id/match", (req, res) => {
           return res.status(404).send({ success: false, message: "Person not found" });
         }
   
-        // Add the likedId to the person's likes array if not already there
         if (!person.likes.includes(likedId)) {
           person.likes.push(likedId);
         }
   
         return person.save().then(() => {
-          // Check if the liked person also likes this person
           return Person.findById(likedId);
         });
       })
@@ -141,7 +136,6 @@ app.post("/api/person/:id/match", (req, res) => {
           return res.status(404).send({ success: false, message: "Liked person not found" });
         }
   
-        // If the liked person also likes this person, add to both matches arrays
         if (likedPerson.likes.includes(personId)) {
           if (!likedPerson.matches.includes(personId)) {
             likedPerson.matches.push(personId);
