@@ -43,13 +43,7 @@
 
 
   <script>
-<<<<<<< HEAD
-
-
-
-=======
   import axios from 'axios'
->>>>>>> 6dd0eea355d8f036df02d8b05d932a7e47bf3b19
   export default {
     data() {
       return {

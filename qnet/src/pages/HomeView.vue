@@ -1,102 +1,96 @@
 <template>
   <main class="dashboard-container" role="main">
-    <header class="header-section">
+    <header class="header-nav" role="banner">
       <img
         loading="lazy"
         src="https://cdn.builder.io/api/v1/image/assets/TEMP/d8b11bede3620921516c0a3e35d8b5bab2338ed9ccb42824992b410b5b13f263?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
         class="logo"
         alt="Company logo"
       />
-      <nav class="navigation" role="navigation">
+      <div class="search-wrapper">
         <img
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/1d271a49b1a0fcbaaa1f4e434f947cfe88d58f64d3f0b33e6987b3d92769d85d?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-          class="nav-icon"
-          alt="Navigation menu icon"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/e2ddc37808ff9ec54d2842258b667489298a7e8ad45a8bbdf05ebe418eff509d?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
+          class="search-icon"
+          alt=""
         />
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/349a08a1433f78d5889e970228467b382043612f95c8c28b201eb8465f5a3a35?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-          class="nav-text"
-          alt="Navigation menu text"
-        />
-      </nav>
+        <span class="search-text">search</span>
+      </div>
       <img
         loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/349a08a1433f78d5889e970228467b382043612f95c8c28b201eb8465f5a3a35?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-        class="profile-icon"
+        src="https://cdn.builder.io/api/v1/image/assets/TEMP/043020189a272e6371a31ecc1984b07f7bf186be1b974455242225535d63354b?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
+        class="profile-avatar"
         alt="User profile"
       />
     </header>
 
-    <section class="banner-section">
-      <img
-        loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/e9d14d3433208500fbd0a5dcc6821349817cfaccffd6174bcd74aecb0a60828e?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-        class="banner-image"
-        alt="Banner content"
-      />
-    </section>
+    <h1 class="page-title">Dashboard</h1>
 
-    <section class="content-section">
-      <img
-        loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/edc1aa55-5c15-443f-a0d5-39503fbea8ce?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-        class="sidebar-image"
-        alt="Sidebar content"
-      />
-      <div class="gallery-grid">
+    <section class="content-wrapper">
+      <nav class="navigation" role="navigation">
+        <ul class="nav-list">
+          <li>Explore</li>
+          <li>Matches</li>
+          <li>ChatBot</li>
+        </ul>
+      </nav>
+
+      <article class="profile-card">
         <img
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/c341bb4e7956c90cb362d10f580a0ae5fb720ab16b6cff7fe809c23577fd8022?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-          class="gallery-item"
-          alt="Gallery item 1"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/fe89f428d0eaa2d01668327191455af5f32e659d53a6d4976ed5f8d81a1ad418?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
+          class="profile-image"
+          alt="Profile photo"
         />
+        <div class="profile-details">
+          <h2 class="profile-name">**Name**</h2>
+          <p class="profile-age">**Age**</p>
+          <p class="profile-location">**location**</p>
+          
+          <div class="questions-section">
+            <h3 class="question">Question 1:</h3>
+            <h3 class="question">Question 2:</h3>
+            <h3 class="question">Question 3:</h3>
+          </div>
+
+          <div class="action-buttons">
+            <button class="action-btn" aria-label="Like profile">
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/3f804a074393477b38a3b92d07c0add50c56078088316b7abf3b4c1765adbb26?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
+                alt=""
+              />
+            </button>
+            <button class="action-btn" aria-label="Super like profile">
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/c6eb005298e4e6df62ff3c428f0c121deab30b21b417ab7ceadeaae701f64035?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
+                alt=""
+              />
+            </button>
+            <button class="action-btn" aria-label="Pass profile">
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/2fef519408a457b8ad442a1c5c99453ff58f3724a461c73bbee37e611a757426?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
+                alt=""
+              />
+            </button>
+          </div>
+        </div>
         <img
           loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/3c74f172-9b08-45e0-a6c2-6136b897050f?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-          class="gallery-item"
-          alt="Gallery item 2"
+          src="https://cdn.builder.io/api/v1/image/assets/TEMP/4e2c8487e0e06b661827b7d752d928b8e5a5ff3428cd8b61acffb422744390ec?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
+          class="profile-badge"
+          alt=""
         />
-        <img
-          loading="lazy"
-          src="https://cdn.builder.io/api/v1/image/assets/TEMP/c47927cb4985565d9afa943c3faf978aa3ac6fdbfe14b40126a27787c0eb958a?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-          class="gallery-item"
-          alt="Gallery item 3"
-        />
-      </div>
+      </article>
     </section>
-<<<<<<< HEAD
-=======
-    <div class="action-wrapper">
-      <button 
-        class="primary-button"
-        tabindex="0"
-        role="button"
-        aria-label="Start Your Journey"
-      >
-        <span class="button-text" type = "submit" @click = "toRegister">Start Your Journey</span>
-      </button>
-    </div>
->>>>>>> 6dd0eea355d8f036df02d8b05d932a7e47bf3b19
   </main>
 </template>
 
-<script>
-export default{
-  methods:{
-    toRegister(){
-      this.$router.push('/register')
-    }
-    }
-  }
-</script>
-
-
 <style scoped>
-<<<<<<< HEAD
 .dashboard-container {
-  background: linear-gradient(to right, rgba(255, 108, 100, 1), rgba(255, 200, 150, 1));
+  background: rgba(255, 108, 100, 1);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -104,212 +98,200 @@ export default{
   padding: 8px 8px 28px 0;
 }
 
-.header-section {
+.header-nav {
   align-self: stretch;
   display: flex;
-=======
-
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%; /* Ensures body height aligns with viewport */
-}
-
-
-.hero-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; 
-  padding: 160px 24px;
-  height: 100vh; 
-  width: 100vw; 
-  background: linear-gradient(135deg, #FFF,  #ff6c64); 
-}
-
-
-@media (max-width: 991px) {
-  .hero-section {
-    padding: 100px 20px;
-  }
-}
-
-.content-wrapper {
-  display: flex;
-  width: 412px;
-  max-width: 100%;
-  flex-direction: column;
-  text-align: center;
-  line-height: 1.2;
-  justify-content: start;
-}
-
-.brand-title {
-  color: var(--Accent, #ff6c64);
-  letter-spacing: -2.16px;
-  font: var(--sds-typography-title-hero-font-weight)
-    var(--sds-typography-title-hero-size)
-    var(--sds-typography-title-hero-font-family);
-}
-
-@media (max-width: 991px) {
-  .brand-title {
-    font-size: 40px;
-  }
-}
-
-.brand-tagline {
-  color: var(--Secondary, #1b263b);
-  margin-top: 8px;
-  font: var(--sds-typography-subtitle-font-weight)
-    var(--sds-typography-subtitle-size-base)
-    var(--sds-typography-subtitle-font-family);
-}
-
-.action-wrapper {
-  display: flex;
-  margin-top: 32px;
-  width: 240px;
-  max-width: 100%;
-  align-items: center;
-  gap: 16px;
-  color: #ff6c64;
-  justify-content: start;
-  font: var(--sds-typography-body-font-weight-regular)
-    var(--sds-typography-body-size-medium) / 1
-    var(--sds-typography-body-font-family);
-}
-
-.primary-button {
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
-  background-color: rgba(27, 38, 59, 1);
->>>>>>> 6dd0eea355d8f036df02d8b05d932a7e47bf3b19
   width: 100%;
   align-items: center;
   gap: 20px;
+  color: #fff;
   justify-content: space-between;
-  border-bottom: 2px solid #ccc;
+  font: 400 40px Katibeh, sans-serif;
 }
 
 .logo {
   aspect-ratio: 3.68;
   object-fit: contain;
-  object-position: center;
   width: 173px;
   align-self: stretch;
-  max-width: 100%;
-  margin: auto 0;
 }
 
-.navigation {
-  align-self: stretch;
+.search-wrapper {
   display: flex;
   align-items: start;
-  gap: 9px;
-  margin: auto 0;
-  border-right: 2px solid #ccc;
+  gap: 5px;
 }
 
-.nav-icon {
+.search-icon {
   aspect-ratio: 1;
   object-fit: contain;
-  object-position: center;
-  width: 18px;
-  margin-top: 5px;
+  width: 24px;
+  margin-top: 6px;
 }
 
-.nav-text {
-  aspect-ratio: 4.2;
-  object-fit: contain;
-  object-position: center;
-  width: 84px;
-}
-
-.profile-icon {
+.profile-avatar {
   aspect-ratio: 1;
   object-fit: contain;
-  object-position: center;
   width: 76px;
-  align-self: stretch;
+  border-radius: 50%;
 }
 
-.banner-image {
-  aspect-ratio: 6.9;
-  object-fit: contain;
-  object-position: center;
-  width: 256px;
-  max-width: 100%;
-  margin: 41px 0 0 201px;
+.page-title {
+  color: #fff;
+  margin: 33px 0 0 199px;
+  font: 400 74px Katibeh, sans-serif;
 }
 
-.content-section {
+.content-wrapper {
   display: flex;
   width: 100%;
-  max-width: 1144px;
+  max-width: 1143px;
   gap: 20px;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 62px 0 0 22px;
+  margin: 70px 0 0 33px;
 }
 
-.sidebar-image {
-  aspect-ratio: 0.57;
-  object-fit: contain;
-  object-position: center;
-  width: 147px;
-  align-self: start;
-  margin-top: 54px;
-  max-width: 100%;
-  /* border-right: 2px solid #ccc; */
+.navigation {
+  color: #fff;
+  text-align: center;
+  margin-top: 60px;
+  font: 400 40px/48px Katibeh, sans-serif;
 }
 
-.gallery-grid {
+.nav-list {
+  list-style: none;
+  padding: 0;
+}
+
+.profile-card {
   display: flex;
   align-items: center;
-  gap: 40px 52px;
+  gap: 40px 44px;
   flex-wrap: wrap;
 }
 
-.gallery-item {
+.profile-image {
   aspect-ratio: 1;
   object-fit: contain;
-  object-position: center;
-  width: 100px;
+  width: 120px;
   align-self: stretch;
-  max-width: 100%;
-  margin: auto 0;
 }
 
-.gallery-item:nth-child(2) {
-  background-color: rgba(217, 217, 217, 1);
-  width: 100%;
+.profile-details {
+  border-radius: 50px;
+  background: rgba(217, 217, 217, 1);
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 45px 54px;
+}
+
+.profile-name {
+  color: #000;
+  text-align: center;
+  font: 400 36px 'Lily Script One', sans-serif;
+  margin: 0;
+}
+
+.profile-age {
+  color: #000;
+  text-align: center;
+  z-index: 10;
+  margin-top: -8px;
+  font: 400 32px Katibeh, sans-serif;
+}
+
+.profile-location {
+  color: #000;
+  text-align: center;
+  font: 400 32px Katibeh, sans-serif;
+}
+
+.question {
+  color: #000;
+  align-self: start;
+  margin-top: 74px;
+  font: 400 26px 'Lily Script One', sans-serif;
+}
+
+.action-buttons {
+  display: flex;
+  margin-top: 84px;
+  width: 405px;
+  max-width: 100%;
+  align-items: start;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.action-btn img {
+  aspect-ratio: 1;
+  object-fit: contain;
+  width: 72px;
+}
+
+.profile-badge {
+  aspect-ratio: 1;
+  object-fit: contain;
+  width: 120px;
+  align-self: stretch;
 }
 
 @media (max-width: 991px) {
-  .header-section {
+  .header-nav {
     max-width: 100%;
+    white-space: initial;
   }
 
-  .banner-image {
-    margin: 40px 0 0 10px;
+  .page-title {
+    margin-left: 10px;
+    font-size: 40px;
   }
 
-  .content-section {
+  .content-wrapper {
     max-width: 100%;
     margin-top: 40px;
   }
 
-  .sidebar-image {
+  .navigation {
     margin-top: 40px;
   }
 
-  .gallery-grid {
+  .profile-card {
     max-width: 100%;
   }
 
-  .gallery-item:nth-child(2) {
+  .profile-details {
     max-width: 100%;
+    padding: 0 20px;
   }
+
+  .question {
+    margin-top: 40px;
+  }
+
+  .action-buttons {
+    margin-top: 40px;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
 }
 </style>
