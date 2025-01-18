@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="container">
       <div class="top"></div>
       <div class="bottom"></div>
@@ -17,9 +17,35 @@
         <button type="submit" @click="register">Register</button>
       </div>
     </div>
-  </template>
-  
+  </template> -->
+
+<template>
+  <div class="container">
+    <div class="top"></div>
+    <div class="bottom"></div>
+    <div class="center">
+      <h2>Sign Up</h2>
+      <div id="input">
+        <label for="email">Email</label>
+        <input v-model="email" type="email" placeholder="e.g. John Smith" name="email" />
+      </div>
+      <div id="input">
+        <br />
+        <br />
+        <label for="password">Password</label>
+        <input v-model="password" type="password" placeholder="********" name="password" />
+      </div>
+      <button type="submit" @click="redirectToAuth0">Register</button>
+    </div>
+  </div>
+</template>
+
+
+
   <script>
+
+
+
   export default {
     data() {
       return {
