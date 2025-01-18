@@ -11,20 +11,43 @@
         role="button"
         aria-label="Start Your Journey"
       >
-        <span class="button-text">Start Your Journey</span>
+        <span class="button-text" type = "submit" @click = "toRegister">Start Your Journey</span>
       </button>
     </div>
   </main>
 </template>
 
+<script>
+export default{
+  methods:{
+    toRegister(){
+      this.$router.push('/register')
+    }
+    }
+  }
+</script>
+
+
 <style scoped>
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Ensures body height aligns with viewport */
+}
+
+
 .hero-section {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: start;
+  justify-content: center; 
   padding: 160px 24px;
+  height: 100vh; 
+  width: 100vw; 
+  background: linear-gradient(135deg, #FFF,  #ff6c64); 
 }
+
 
 @media (max-width: 991px) {
   .hero-section {
@@ -43,7 +66,7 @@
 }
 
 .brand-title {
-  color: var(--Accent, #ff6f61);
+  color: var(--Accent, #ff6c64);
   letter-spacing: -2.16px;
   font: var(--sds-typography-title-hero-font-weight)
     var(--sds-typography-title-hero-size)
@@ -71,7 +94,7 @@
   max-width: 100%;
   align-items: center;
   gap: 16px;
-  color: #ff6f61;
+  color: #ff6c64;
   justify-content: start;
   font: var(--sds-typography-body-font-weight-regular)
     var(--sds-typography-body-size-medium) / 1

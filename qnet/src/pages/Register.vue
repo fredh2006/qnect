@@ -20,6 +20,7 @@
   </template>
   
   <script>
+  import axios from 'axios'
   export default {
     data() {
       return {
@@ -29,10 +30,19 @@
     },
     methods: {
       register() {
-        const axios = require('axios');
         let data = JSON.stringify({
-          "email": this.email,
-          "password": this.password,
+        "name": '',
+        "about": '',
+        "social_media": '',
+        "sexuality": '',
+        "gender": '',
+        "age": '',
+        "location": '',
+        "questions": '',
+        "email": this.email,
+        "password": this.password,
+        "likes": [],
+        "matches": [],
         });
   
         let config = {
@@ -61,8 +71,6 @@
 
   *, *:before, *:after {
     box-sizing: border-box;
-    margin-left:-10px;
-    margin-top:-10px;
   }
   #input{
     width: 300px !important;
@@ -117,22 +125,22 @@
   .top {
     &:before {
       transform: rotate(45deg);
-      background: #FF6C64; /* Coral Red */
+      background: #FFF; /* Coral Red */
     }
     &:after {
       transform: rotate(135deg);
-      background: #FFB79A; /* Soft Peach */
+      background:#ff6c64; /* Soft Peach */
     }
   }
 
   .bottom {
     &:before {
       transform: rotate(-45deg);
-      background: #B3A0D1; /* Lavender */
+      background: #ff6c64; /* Lavender */
     }
     &:after {
       transform: rotate(-135deg);
-      background: #A7E6D7; /* Soft Mint */
+      background: #FFF;; /* Soft Mint */
     }
   }
 
