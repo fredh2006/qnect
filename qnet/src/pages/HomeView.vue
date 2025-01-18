@@ -14,19 +14,13 @@
       
       <ul class="nav-links" role="menubar">
         <li role="none">
-          <a href="#" class="nav-item" role="menuitem" tabindex="0">Home</a>
-        </li>
-        <li role="none">
-          <a href="#" class="nav-item" role="menuitem" tabindex="0">About</a>
-        </li>
-        <li role="none">
           <a href="#" class="nav-item active" role="menuitem" tabindex="0">Our Mission</a>
         </li>
       </ul>
 
       <div class="auth-buttons">
-        <button class="sign-in-btn" tabindex="0">Sign in</button>
-        <button class="register-btn bold-text" tabindex="0">Register</button>
+        <button class="sign-in-btn" tabindex="0" @click = "handleLog">Sign in</button>
+        <button class="register-btn" tabindex="0" @click = "handleRegister">Register</button>
       </div>
     </nav>
   </header>
@@ -53,13 +47,26 @@ export default {
   name: 'HeroSection',
   methods: {
     handleStart() {
-      this.$emit('start-journey')
+      this.$router.push('/register')
+    },
+    handleLog(){
+      this.$router.push('/login')
+    },
+    handleRegister(){
+      this.$router.push('/register')
     }
   }
 }
 </script>
 
 <style scoped>
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Ensures body height aligns with viewport */
+}
+
 .nav-header {
   background: #fff;
   border-bottom: 1px solid #d9d9d9;
@@ -184,6 +191,9 @@ export default {
   align-items: center;
   justify-content: flex-start;
   padding: 160px 24px;
+  background: linear-gradient(135deg, #ff6f61, white);
+  height: 100vh; /* Takes up the full viewport height */
+  box-sizing: border-box; /* Ensures padding is included in the height calculation */
 }
 
 .content-wrapper {
