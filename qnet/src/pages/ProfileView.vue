@@ -156,42 +156,49 @@ export default {
       }
     },
     register() {
-      var QTA = (toRaw(this.questionsToAnswers))
+  var QTA = (toRaw(this.questionsToAnswers))
 
-      var number_age = Number(this.age)
-      let data = JSON.stringify({
-        "name": this.name,
-        "about": this.about,
-        "social_media": this.social_media,
-        "sexuality": this.sexuality,
-        "gender": this.gender,
-        "age": number_age,
-        "location": this.location,
-        "questions": QTA,
-        "email": sessionStorage.getItem('email'),
-        "password": sessionStorage.getItem('password'),
-        "matches": [],
-        "likes": [],
-      });
+  var number_age = Number(this.age)
+  let data = JSON.stringify({
+    "name": this.name,
+    "about": this.about,
+    "social_media": this.social_media,
+    "sexuality": this.sexuality,
+    "gender": this.gender,
+    "age": number_age,
+    "location": this.location,
+    "questions": QTA,
+    "email": sessionStorage.getItem('email'),
+    "password": sessionStorage.getItem('password'),
+    "matches": [],
+    "likes": [],
+  });
 
-      let config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'http://localhost:3000/api/person/',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        data: data
-      };
+  let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'http://localhost:3000/api/person/',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: data
+  };
 
-      axios.request(config)
-        .then((response) => {
-          console.log(JSON.stringify(response.data));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+  axios.request(config)
+    .then((response) => {
+      console.log(JSON.stringify(response.data));
+
+      // Store the user ID in sessionStorage
+      if (response.data && response.data.personId) {
+        sessionStorage.setItem('userId', response.data.personId);  // Save the user ID
+        sessionStorage.setItem('location', this.location);
+      }
+      this.$router.push('/matches');
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
   }
 }
 

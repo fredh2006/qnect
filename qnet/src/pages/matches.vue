@@ -75,8 +75,8 @@
     data() {
       return {
         people: [],
-        location: "toronto", // Replace with dynamic user location if available
-        userId: "678bf33511fd16bded398250", // Replace with actual logged-in user ID
+        location: sessionStorage.getItem('location'), // Replace with dynamic user location if available
+        userId: sessionStorage.getItem('userId'), // Replace with actual logged-in user ID
         notification: "",
         currentIndex: 0,
       };
@@ -84,7 +84,7 @@
     methods: {
       fetchPeopleByLocation() {
         axios
-          .get(`http://localhost:3000/api/people/location/${this.location}`)
+          .get(`http://localhost:3000/api/people/location/${this.location}/user/${this.userId}`)
           .then((response) => {
             if (response.data.success) {
               this.people = response.data.people;
@@ -221,7 +221,7 @@
   }
   
   .carousel-arrow {
-    
+  
     background-color: #FF6C64;
     color: white;
     font-size: 24px;
