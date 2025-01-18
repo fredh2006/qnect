@@ -34,19 +34,20 @@ const personSchema = new mongoose.Schema({
   questions: { type: Map, of: String, required: true },
   email: { type: String, required: true},
   password: { type: String, required: true },
+  likes: { type: [Number], default: [] },
   matches: { type: [Number], default: [] }, // List of matched person IDs
 });
 
 const Person = mongoose.model("Person", personSchema);
 
 app.post("/api/person", (req, res) => {
-  const { name, about, social_media, sexuality, gender, age, location, questions, email, password, matches } = req.body;
+  const { name, about, social_media, sexuality, gender, age, location, questions, email, password, likes, matches } = req.body;
 
-  if (!name || !about || !social_media || !sexuality || !gender || !age || !location || !questions || !email || !password || !matches) {
+  if (!name || !about || !social_media || !sexuality || !gender || !age || !location || !questions || !email || !password || !likes || !matches) {
     return res.status(400).send({ success: false, message: "All fields are required." });
   }
 
-  const newPerson = new Person({ name, about, social_media, sexuality, gender, age, location, questions, email, password, matches});
+  const newPerson = new Person({ name, about, social_media, sexuality, gender, age, location, questions, email, password, likes, matches});
 
   newPerson.save()
     .then(savedPerson => {
@@ -107,6 +108,66 @@ app.post("/api/person/:id/match", (req, res) => {
       })
       .catch(err => {
         res.status(500).send({ success: false, message: "Error adding match", error: err });
+      });
+  });
+  
+
+  app.post("/api/person/:id/like", (req, res) => {
+    const personId = req.params.id; // The person who likes someone
+    const { likedId } = req.body; // The person being liked
+  
+    if (!likedId) {
+      return res.status(400).send({ success: false, message: "Liked ID is required" });
+    }
+  
+    Person.findById(personId)
+      .then(person => {
+        if (!person) {
+          return res.status(404).send({ success: false, message: "Person not found" });
+        }
+  
+        // Add the likedId to the person's likes array if not already there
+        if (!person.likes.includes(likedId)) {
+          person.likes.push(likedId);
+        }
+  
+        return person.save().then(() => {
+          // Check if the liked person also likes this person
+          return Person.findById(likedId);
+        });
+      })
+      .then(likedPerson => {
+        if (!likedPerson) {
+          return res.status(404).send({ success: false, message: "Liked person not found" });
+        }
+  
+        // If the liked person also likes this person, add to both matches arrays
+        if (likedPerson.likes.includes(personId)) {
+          if (!likedPerson.matches.includes(personId)) {
+            likedPerson.matches.push(personId);
+          }
+          return likedPerson.save().then(() => {
+            return Person.findById(personId);
+          });
+        }
+        return Person.findById(personId);
+      })
+      .then(person => {
+        if (!person) {
+          return res.status(404).send({ success: false, message: "Person not found during final save" });
+        }
+  
+        if (!person.matches.includes(likedId)) {
+          person.matches.push(likedId);
+        }
+  
+        return person.save();
+      })
+      .then(updatedPerson => {
+        res.status(200).send({ success: true, message: "Like processed successfully", person: updatedPerson });
+      })
+      .catch(err => {
+        res.status(500).send({ success: false, message: "Error processing like", error: err });
       });
   });
   
