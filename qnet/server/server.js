@@ -157,7 +157,6 @@ app.post("/api/person/:id/match", (req, res) => {
         });
 });
 
-  
 app.get("/api/people/location/:location/user/:userId", async (req, res) => {
   const location = req.params.location;
   const userId = req.params.userId;
@@ -167,15 +166,21 @@ app.get("/api/people/location/:location/user/:userId", async (req, res) => {
     if (!currentUser) {
       return res.status(404).send({ success: false, message: "User not found" });
     }
+
     const likedUserIds = currentUser.likes.map(id => new mongoose.Types.ObjectId(id)); // Convert likes to ObjectId
-    // Find people in the specified location excluding those in the `likes` array
+
+    // Find people in the specified location excluding those in the `likes` array and the current user
     const people = await Person.find({
       location: { $regex: new RegExp(location, "i") }, // Case-insensitive location match
-      _id: { $nin: likedUserIds }, // Exclude users already liked by the current user
+      _id: { 
+        $nin: [...likedUserIds, new mongoose.Types.ObjectId(userId)] // Exclude liked users and the current user
+      }
     });
+
     if (people.length === 0) {
       return res.status(200).send({ success: true, message: "No people left to like", people: [] });
     }
+
     res.status(200).send({ success: true, people });
   } catch (err) {
     res.status(500).send({
@@ -185,33 +190,31 @@ app.get("/api/people/location/:location/user/:userId", async (req, res) => {
     });
   }
 });
-  app.get("/api/people/location/:location/user/:userId", async (req, res) => {
-    const location = req.params.location;
-    const userId = req.params.userId;
-  
-    try {
-      // Convert userId to ObjectId for consistent querying
-      const userObjectId = new mongoose.Types.ObjectId(userId);
-  
-      // Find people in the specified location excluding those already liked by the user
-      const people = await Person.find({
-        location: { $regex: new RegExp(location, "i") }, // Case-insensitive location match
-        likes: { $ne: userObjectId }, // Exclude people the user has already liked
-      });
-  
-      if (people.length === 0) {
-        return res.status(200).send({ success: true, message: "No people left to like", people: [] });
-      }
-  
-      res.status(200).send({ success: true, people });
-    } catch (err) {
-      res.status(500).send({
-        success: false,
-        message: "Error retrieving people by location",
-        error: err.message,
-      });
+
+
+app.get("/api/person/:id/matches", async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    // Fetch the user by ID to retrieve their matches
+    const user = await Person.findById(userId);
+    if (!user) {
+      return res.status(404).send({ success: false, message: "User not found" });
     }
-  });
+
+    // Find all users whose IDs are in the matches array of the current user
+    const matches = await Person.find({ _id: { $in: user.matches } });
+
+    res.status(200).send({ success: true, matches });
+  } catch (err) {
+    res.status(500).send({
+      success: false,
+      message: "Error retrieving matches for the user",
+      error: err.message,
+    });
+  }
+});
+
 
   app.get("/api/person/email/:email", (req, res) => {
     const email = req.params.email;
@@ -230,16 +233,16 @@ app.get("/api/people/location/:location/user/:userId", async (req, res) => {
   });
 
   app.get("/api/emails", (req, res) => {
-    // Query the database to get all email addresses from the Person collection
-    Person.find({}, 'email') // Find all documents and return only the 'email' field
-      .then(people => {
-        const emails = people.map(person => person.email); // Extract emails from the documents
-        res.status(200).send({ success: true, emails });
-      })
-      .catch(err => {
-        res.status(500).send({ success: false, message: "Error retrieving emails", error: err });
-      });
-  });
+  // Query the database to get all email addresses from the Person collection
+  Person.find({}, 'email') // Find all documents and return only the 'email' field
+    .then(people => {
+      const emails = people.map(person => person.email); // Extract emails from the documents
+      res.status(200).send({ success: true, emails });
+    })
+    .catch(err => {
+      res.status(500).send({ success: false, message: "Error retrieving emails", error: err });
+    });
+});
   
   
 app.listen(PORT, () => {
