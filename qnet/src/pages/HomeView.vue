@@ -17,10 +17,10 @@
             <a href="#" class="nav-item explore-button" role="menuitem" tabindex="0">Our Mission</a>
           </li>
           <li role="none">
-            <a href="/matches" class="nav-item active" role="menuitem" tabindex="0">Log In</a>
+            <a href="/login" class="nav-item active" role="menuitem" tabindex="0">Log In</a>
           </li>
           <li role="none">
-            <a href="/chatbot" class="nav-item chat-button" role="menuitem" tabindex="0">Register</a>
+            <a href="/register" class="nav-item chat-button" role="menuitem" tabindex="0">Register</a>
           </li>
         </ul>
       </nav>
