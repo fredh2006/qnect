@@ -191,7 +191,7 @@
           });
       },
       likePerson(likedId) {
-  // POST request for liking the person
+  // First, send the like request
   axios
     .post(`http://localhost:3000/api/person/${this.userId}/like`, {
       likedId,
@@ -212,9 +212,10 @@
         setTimeout(() => {
           this.notification = "";
         }, 3000);
-        
-        // Post a fixed match score (e.g., 85%)
-        this.postMatchScore(likedId, 85); // Change 85 to your desired score
+        console.log('Calling checkMutualLike...');
+
+        // Check if the other person has also liked this user (Mutual Like)
+        this.checkMutualLike(likedId);
       } else {
         console.error("Error liking person:", response.data.message);
       }
@@ -224,24 +225,67 @@
     });
 },
 
-// Method to post match score
-postMatchScore(likedId, matchScore) {
+// Method to check if both users liked each other
+checkMutualLike(likedId) {
+    console.log(`Checking mutual like for userId: ${this.userId}, likedId: ${likedId}`);
   axios
-    .post(`http://localhost:3000/api/person/${this.userId}/matchscore`, {
-      likedId,
-      matchScore,
-    })
+    .get(`http://localhost:3000/api/person/${likedId}/likes/${this.userId}`)
     .then((response) => {
-      if (response.data.success) {
-        console.log("Match score posted successfully");
-      } else {
-        console.error("Error posting match score:", response.data.message);
+      if (response.data.success && response.data.likedByUser) {
+        // If the other user has also liked the current user, post the match score
+        const similarityScore = this.calculateSimilarityScore(); // Example: calculate similarity score
+        this.postMatchScore(likedId, similarityScore); // Post the match score for both users
       }
     })
     .catch((error) => {
-      console.error("Error posting match score:", error);
+      console.error("Error checking mutual like:", error);
     });
 },
+
+// Method to calculate similarity score (for now it's a fixed value, can be dynamic)
+calculateSimilarityScore() {
+  // Here, you can calculate similarity based on shared interests, preferences, etc.
+  // For now, returning a fixed score of 85%
+  return 85;
+},
+
+// Method to post match score for both users
+postMatchScore(matchId, score) {
+  axios
+    .post(`http://localhost:3000/api/person/${this.userId}/matchscore`, {
+    matchId,
+    score,
+    })
+    .then((response) => {
+      if (response.data.success) {
+        console.log("Match score posted successfully for user:", this.userId);
+      } else {
+        console.error("Error posting match score for user:", this.userId);
+      }
+    })
+    .catch((error) => {
+      console.error("Error posting match score for user:", this.userId);
+    });
+
+  // Also post the score for the liked person
+  axios
+    .post(`http://localhost:3000/api/person/${matchId}/matchscore`, {
+      matchId: this.userId,
+      score,
+    })
+    .then((response) => {
+      if (response.data.success) {
+        console.log("Match score posted successfully for user:", matchId);
+      } else {
+        console.error("Error posting match score for user:", matchId);
+      }
+    })
+    .catch((error) => {
+      console.error("Error posting match score for user:", matchId);
+    });
+},
+
+
 
       moveCarousel(direction) {
         if (direction === "left") {

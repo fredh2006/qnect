@@ -186,6 +186,36 @@ app.post("/api/person/:id/match", (req, res) => {
         });
 });
 
+
+// Endpoint to check if the user with `userId` has liked the person with `likedId`
+app.get("/api/person/:likedId/likes/:userId", async (req, res) => {
+  const likedId = req.params.likedId;
+  const userId = req.params.userId;
+
+  try {
+    // Find the person who is being liked
+    const likedPerson = await Person.findById(likedId);
+    if (!likedPerson) {
+      return res.status(404).send({ success: false, message: "Liked person not found" });
+    }
+
+    // Check if the user has liked the liked person
+    const likedByUser = likedPerson.likes.includes(userId);
+    
+    res.status(200).send({
+      success: true,
+      likedByUser,
+    });
+  } catch (err) {
+    res.status(500).send({
+      success: false,
+      message: "Error checking if person liked the user",
+      error: err.message,
+    });
+  }
+});
+
+
 app.get("/api/people/location/:location/user/:userId", async (req, res) => {
   const location = req.params.location;
   const userId = req.params.userId;
