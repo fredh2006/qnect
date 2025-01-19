@@ -4,28 +4,23 @@
     <header class="nav-header" role="banner">
       <nav class="nav-container" role="navigation" aria-label="Main navigation">
         <div class="logo-container">
-          <div @click = "goHome"class="logo-wrapper">
-            <img
-              loading="lazy"
-              src="/public/qc_logo.png"
-              class="logo-image"
-              alt="Company Logo"
-            />
+          <div @click="goHome" class="logo-wrapper">
+            <img loading="lazy" src="/public/qc_logo.png" class="logo-image" alt="Company Logo" />
           </div>
         </div>
-        
+
         <ul class="nav-links" role="menubar">
           <li role="none">
             <a href="#" class="nav-item explore-button" role="menuitem" tabindex="0">Explore</a>
           </li>
           <li role="none">
-            <a href="/matches" class="nav-item active" role="menuitem" tabindex="0">Matches</a>
+            <a href="/matches" class="nav-item matches-button" role="menuitem" tabindex="0">Matches</a>
           </li>
           <li role="none">
-            <a href="/dashboard" class="nav-item chat-button" role="menuitem" tabindex="0">Dashboard</a>
+            <a href="/dashboard" class="nav-item dashboard-button" role="menuitem" tabindex="0">Dashboard</a>
           </li>
           <li role="none">
-            <a href="/yourprofile" class="nav-item profile-button" role="menuitem" tabindex="0"></a>
+            <a href="/yourprofile" class="nav-item-profile profile-button" role="menuitem" tabindex="0"><div style = "position: absolute; margin-left: 11px; font-weight: 700;">P</div></a>
           </li>
         </ul>
       </nav>
@@ -62,7 +57,7 @@ export default {
   mounted() {
     // Add an introduction message when the component is mounted
     this.chatMessages.push({
-      sender: "Rizz God",
+      sender: "Rizz Bot",
       text: "Hi! I'm your dating coach, here to offer you personalized advice. Ask me anything about dating, relationships, or how to find the perfect partner!",
     });
   },
@@ -76,6 +71,9 @@ export default {
         await new Promise(resolve => setTimeout(resolve, delay));
         element.textContent += text[i];
       }
+    },
+    goHome(){
+      this.$router.push('/')
     },
 
     async sendMessage() {
@@ -93,7 +91,7 @@ export default {
       try {
         const result = await getGroqResponse(prompt);
         const messageIndex = this.chatMessages.length;
-        this.chatMessages.push({ sender: "Rizz God", text: result });
+        this.chatMessages.push({ sender: "Rizz Bot", text: result });
         
         // Wait for Vue to update the DOM
         await this.$nextTick();
@@ -109,9 +107,11 @@ export default {
 </script>
 
 <style scoped>
-.nav-header {
-  background: #fff;
-  border-bottom: 1px solid #d9d9d9;
+  .nav-header {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(255, 111, 97, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
 }
 
 .nav-container {
@@ -120,12 +120,20 @@ export default {
   gap: 24px;
   padding: 0 24px;
   height: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.logo-container, .logo-wrapper {
+.logo-container,
+.logo-wrapper {
   display: flex;
   align-items: center;
   width: 100px;
+  transition: transform 0.2s ease;
+}
+
+.logo-wrapper:hover {
+  transform: scale(1.05);
 }
 
 .logo-image {
@@ -133,6 +141,34 @@ export default {
   object-fit: contain;
   width: 64px;
   height: auto;
+}
+
+.search-container {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 24px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 111, 97, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  color: #1b263b;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #ff6f61;
+  box-shadow: 0 0 0 4px rgba(255, 111, 97, 0.1);
+}
+
+.search-input::placeholder {
+  color: rgba(27, 38, 59, 0.5);
 }
 
 .nav-links {
@@ -151,27 +187,71 @@ export default {
   text-decoration: none;
   color: #1b263b;
   transition: all 0.2s ease;
+  font-weight: 500;
+  position: relative;
+  background: transparent;
 }
 
-.nav-item.active {
-  background-color: #865a5a;
-  color: #FFF;
+.nav-item-profile {
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #1b263b;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  position: relative;
+  background: transparent;
 }
 
-.chat-button{
-  background-color: rgba(27, 38, 59, 1);
-  border-color: rgba(27, 38, 59, 1);;
+.nav-item:hover {
   color: #ff6f61;
+  background: rgba(255, 111, 97, 0.1);
 }
 
-.explore-button{
-  background-color: rgb(217, 204, 204);
+.matches-button {
+  background: #ff6f61;
+  color: white;
 }
 
-.profile-button{
+/* Add this if you want a subtle indicator under non-active nav items on hover */
+.nav-item:not(.active)::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #ff6f61;
+  transition: all 0.2s ease;
+  transform: translateX(-50%);
+}
+
+.nav-item:not(.active):hover::after {
+  width: 30px;
+}
+
+.dashboard-button {
+    background-color: rgba(27, 38, 59, 1);
+    border-color: rgba(27, 38, 59, 1);
+    color: #ff6f61;
+}
+
+.chat-button {
+  background-color: #ff6f61;
+  border-color: #ff6f61;
+  color: rgba(27, 38, 59, 1);
+}
+
+.explore-button {
+  background-color: rgb(222, 205, 205);
+  border-color: rgb(222, 205, 205);
+}
+
+.profile-button {
   background-color: rgba(27, 38, 59, 1);
-  border-color: rgba(27, 38, 59, 1);
-  border-radius: 100px;
+  border-color: rgb(27, 38, 59);
+  border-radius: 1000px;
+  color: white;
 }
 
 .gradient-background {
