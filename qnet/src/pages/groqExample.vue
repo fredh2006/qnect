@@ -271,7 +271,7 @@ export default {
         console.log('Emotions:', emotions);
         try {
         // 3. Get bot response
-        const result = await getGroqResponse("Given the user's situation of emotions analyze their emotions"+JSON.stringify(emotions));
+        const result = await getGroqResponse("Given the user's situation of emotions analyze their emotions"+JSON.stringify(emotions)+"The emotions records the person's voice as they are trying to get into a relationship. If the mood is generally timid, make comments on how they can step up the game. If the mood more calm, tell them to show enthousiasm. If the mood is more confident, tell them they are on their way to getting into a relationship.");
 
         // 4. Add bot message
         const messageIndex = this.chatMessages.length;

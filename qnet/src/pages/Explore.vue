@@ -10,7 +10,7 @@
 
         <ul class="nav-links" role="menubar">
           <li role="none">
-            <a href="/explore" class="nav-item explore-button" role="menuitem" tabindex="0">Explore</a>
+            <a href="/chatbot" class="nav-item explore-button" role="menuitem" tabindex="0">Chatbot</a>
           </li>
           <li role="none">
             <a href="/matches" class="nav-item matches-button" role="menuitem" tabindex="0">Matches</a>
