@@ -28,7 +28,7 @@
             <a href="/chatbot" class="nav-item chat-button" role="menuitem" tabindex="0">ChatBot</a>
           </li>
           <li role="none">
-            <a href="/chatbot" class="nav-item profile-button" role="menuitem" tabindex="0"></a>
+            <a href="/yourprofile" class="nav-item profile-button" role="menuitem" tabindex="0"></a>
           </li>
         </ul>
       </nav>
@@ -350,6 +350,12 @@ postMatchScore(matchId, score) {
   background: linear-gradient(135deg, #ff6f61, white);
   min-height: calc(100vh - 64px);
   padding: 40px 24px;
+}
+
+.profile-button{
+  background-color: rgba(27, 38, 59, 1);
+  border-color: rgba(27, 38, 59, 1);;
+  border-radius: 100px;
 }
 
 .no-matches{

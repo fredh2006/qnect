@@ -22,7 +22,10 @@
             <a href="/matches" class="nav-item active" role="menuitem" tabindex="0">Matches</a>
           </li>
           <li role="none">
-            <a href="/profile" class="nav-item chat-button" role="menuitem" tabindex="0">Profile</a>
+            <a href="/dashboard" class="nav-item chat-button" role="menuitem" tabindex="0">Dashboard</a>
+          </li>
+          <li role="none">
+            <a href="/yourprofile" class="nav-item profile-button" role="menuitem" tabindex="0"></a>
           </li>
         </ul>
       </nav>
@@ -163,6 +166,12 @@ export default {
 
 .explore-button{
   background-color: rgb(217, 204, 204);
+}
+
+.profile-button{
+  background-color: rgba(27, 38, 59, 1);
+  border-color: rgba(27, 38, 59, 1);
+  border-radius: 100px;
 }
 
 .gradient-background {
