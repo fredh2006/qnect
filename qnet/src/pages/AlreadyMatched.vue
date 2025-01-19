@@ -53,6 +53,10 @@
                   <strong>Location</strong>
                   <p>{{ person.location }}</p>
                 </div>
+                <div class="info-item">
+                  <strong>Socials</strong>
+                  <p>@{{ person.social_media }}</p>
+                </div>
               </div>
 
               <div class="about-section">
@@ -207,7 +211,7 @@ export default {
 
 .info-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   margin-bottom: 24px;
   padding: 16px;
