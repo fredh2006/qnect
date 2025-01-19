@@ -20,7 +20,7 @@
         <input type="search" placeholder="search" class="search-input">
       </header>
       
-      <h1 class="dashboard-title">Dashboard</h1>
+      <h1 class="dashboard-title">Welcome</h1>
       
       <div class="profile-card">
         <div class="profile-info">
@@ -65,22 +65,40 @@
 .nav-menu {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 2rem;
+  align-items: center;
+  margin-top: 15vh;
+  width: 100%;
 }
 .nav-item {
   font-family: 'Katibeh', cursive;
   color: white;
   text-decoration: none;
-  font-size: 1.4rem;
+  font-size: 2.2rem;
   padding: 0.5rem 1rem;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.2);
+  width: 90%;
+  text-align: center;
 }
 .main-content {
   padding: 2rem;
 }
 .search-bar {
   margin-bottom: 2rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-top: 0.5rem;
+}
+.search-bar::after {
+  content: '';
+  position: absolute;
+  bottom: -1rem;
+  left: -200px;
+  right: -2rem;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 .search-input {
   font-family: 'Katibeh', cursive;
@@ -90,7 +108,7 @@
   border: none;
   background-color: rgba(255, 255, 255, 0.3);
   color: white;
-  font-size: 1.3rem;
+  font-size: 1.6rem;
 }
 .search-input::placeholder {
   color: rgba(255, 255, 255, 0.8);
@@ -110,25 +128,33 @@
 }
 .profile-info {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 .profile-name {
   font-family: 'Lily Script One', cursive;
   font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.05rem;
 }
-.profile-age, .profile-location {
+.profile-age {
   font-family: 'Katibeh', cursive;
   font-size: 1.4rem;
+  margin-bottom: 0.05rem;
+}
+.profile-location {
+  font-family: 'Katibeh', cursive;
+  font-size: 1.4rem;
+  margin-bottom: 0;
 }
 .questions {
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
 }
 .question {
   font-family: 'Lily Script One', cursive;
   font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin: 0;
 }
 .action-buttons {
   display: flex;
