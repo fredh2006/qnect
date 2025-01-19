@@ -164,7 +164,7 @@
   
   <script>
   import axios from "axios";
-  
+  import { getGroqResponse } from '../groqClient';
   export default {
     data() {
       return {
@@ -226,27 +226,58 @@
 },
 
 // Method to check if both users liked each other
-checkMutualLike(likedId) {
-    console.log(`Checking mutual like for userId: ${this.userId}, likedId: ${likedId}`);
-  axios
-    .get(`http://localhost:3000/api/person/${likedId}/likes/${this.userId}`)
-    .then((response) => {
-      if (response.data.success && response.data.likedByUser) {
-        // If the other user has also liked the current user, post the match score
-        const similarityScore = this.calculateSimilarityScore(); // Example: calculate similarity score
-        this.postMatchScore(likedId, similarityScore); // Post the match score for both users
-      }
-    })
-    .catch((error) => {
-      console.error("Error checking mutual like:", error);
-    });
+async checkMutualLike(likedId) {
+  console.log(`Checking mutual like for userId: ${this.userId}, likedId: ${likedId}`);
+  try {
+    const response = await axios.get(`http://localhost:3000/api/person/${likedId}/likes/${this.userId}`);
+    
+    if (response.data.success && response.data.likedByUser) {
+      // If the other user has also liked the current user, post the match score
+      const similarityScore = await this.calculateSimilarityScore(this.userId, likedId); // Now it works
+      this.postMatchScore(likedId, similarityScore); // Post the match score for both users
+    }
+  } catch (error) {
+    console.error("Error checking mutual like:", error);
+  }
 },
 
+
 // Method to calculate similarity score (for now it's a fixed value, can be dynamic)
-calculateSimilarityScore() {
-  // Here, you can calculate similarity based on shared interests, preferences, etc.
-  // For now, returning a fixed score of 85%
-  return 85;
+async calculateSimilarityScore(user1Id, user2Id) {
+  try {
+    console.log("sim called")
+    // Fetch the users' questions and answers from the backend
+    const user1Response = await axios.get(`http://localhost:3000/api/person/${user1Id}`);
+    const user2Response = await axios.get(`http://localhost:3000/api/person/${user2Id}`);
+
+    const user1 = user1Response.data.person;
+    const user2 = user2Response.data.person;
+
+    if (!user1 || !user2) {
+      throw new Error("One or both users not found");
+    }
+
+    // Combine both users' questions and answers into a single prompt
+    const user1Data = Object.entries(user1.questions)
+      .map(([question, answer]) => `Q: ${question}\nA: ${answer}`)
+      .join("\n");
+
+    const user2Data = Object.entries(user2.questions)
+      .map(([question, answer]) => `Q: ${question}\nA: ${answer}`)
+      .join("\n");
+
+    // Construct the prompt for Groq API
+    const prompt = `Calculate the compatibility score in terms of dating between these two users based on their answers to the following questions. ONLY RETURN A NUMBER DO NOT RETURN ANYTHING ELSE JUST ONE NUMBER ON A SCALE FROM 1-100\n\nUser 1's responses:\n${user1Data}\n\nUser 2's responses:\n${user2Data}`;
+
+    // Send the request to Groq API
+    const similarityScore = await getGroqResponse(prompt);
+
+    // Return the similarity score (e.g., 0-100 scale)
+    return parseInt(similarityScore);
+  } catch (error) {
+    console.error("Error calculating similarity score:", error);
+    throw error;  // Propagate the error if needed
+  }
 },
 
 // Method to post match score for both users
