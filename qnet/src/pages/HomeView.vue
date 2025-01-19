@@ -1,29 +1,30 @@
 <template>
-  <header class="nav-header" role="banner">
-    <nav class="nav-container" role="navigation" aria-label="Main navigation">
-      <div class="logo-container">
-        <div class="logo-wrapper">
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/ae2d83d4d3e8b13caf1a5b074e86f5725406e34effba8ffd87bfe5f0c8e7e457?placeholderIfAbsent=true&apiKey=3c4b34a732e840c294b3a88a3f1fd290"
-            class="logo-image"
-            alt="Company Logo"
-          />
+<header class="nav-header" role="banner">
+      <nav class="nav-container" role="navigation" aria-label="Main navigation">
+        <div class="logo-container">
+          <div @click = "goHome"class="logo-wrapper">
+            <img
+              loading="lazy"
+              src="/public/qc_logo.png"
+              class="logo-image"
+              alt="Company Logo"
+            />
+          </div>
         </div>
-      </div>
-      
-      <ul class="nav-links" role="menubar">
-        <li role="none">
-          <a href="#" class="nav-item active" role="menuitem" tabindex="0">Our Mission</a>
-        </li>
-      </ul>
-
-      <div class="auth-buttons">
-        <button class="sign-in-btn" tabindex="0" @click = "handleLog">Sign in</button>
-        <button class="register-btn" tabindex="0" @click = "handleRegister">Register</button>
-      </div>
-    </nav>
-  </header>
+                
+        <ul class="nav-links" role="menubar">
+          <li role="none">
+            <a href="#" class="nav-item explore-button" role="menuitem" tabindex="0">Our Mission</a>
+          </li>
+          <li role="none">
+            <a href="/login" class="nav-item active" role="menuitem" tabindex="0">Log In</a>
+          </li>
+          <li role="none">
+            <a href="/register" class="nav-item chat-button" role="menuitem" tabindex="0">Register</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
   <main class="hero-section" role="main">
     <section class="content-wrapper">
       <h1 class="main-title">Qnect</h1>
@@ -76,101 +77,54 @@ html, body {
   display: flex;
   align-items: center;
   gap: 24px;
-  padding: 32px;
+  padding: 0 24px;
+  height: 64px;
 }
 
-.logo-container {
+.logo-container, .logo-wrapper {
   display: flex;
   align-items: center;
-  gap: 24px;
-  width: 40px;
-}
-
-.logo-wrapper {
-  display: flex;
-  width: 40px;
-  align-items: center;
-  justify-content: center;
+  width: 100px;
 }
 
 .logo-image {
   aspect-ratio: 0.69;
   object-fit: contain;
-  width: 24px;
+  width: 64px;
+  height: auto;
 }
 
 .nav-links {
   display: flex;
-  min-width: 240px;
   align-items: center;
-  gap: 8px;
-  color: var(--sds-color-text-default-default);
-  justify-content: flex-end;
-  flex: 1;
-  list-style: none;
+  gap: 16px;
   margin: 0;
   padding: 0;
-  font: var(--sds-typography-body-font-weight-regular)
-    var(--sds-typography-body-size-medium) / 1
-    var(--sds-typography-body-font-family);
+  list-style: none;
+  margin-left: auto;
 }
 
 .nav-item {
   border-radius: 8px;
-  display: flex;
-  min-height: 32px;
-  gap: 8px;
-  padding: 8px;
+  padding: 8px 16px;
   text-decoration: none;
-  color: inherit;
+  color: #1b263b;
+  transition: all 0.2s ease;
 }
 
 .nav-item.active {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: #865a5a;
+  color: #FFF;
 }
 
-.auth-buttons {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 178px;
-  font: var(--sds-typography-body-font-weight-regular)
-    var(--sds-typography-body-size-medium) / 1
-    var(--sds-typography-body-font-family);
+.chat-button{
+  background-color: rgba(27, 38, 59, 1);
+  border-color: rgba(27, 38, 59, 1);;
+  color: #ff6f61;
 }
 
-.sign-in-btn {
-  border-radius: 8px;
-  background-color: rgba(255, 111, 97, 1);
-  color: var(--Secondary, #1b263b);
-  flex: 1;
-  padding: 8px;
-  border: 1px solid rgba(255, 111, 97, 1);
-  cursor: pointer;
-}
-
-.register-btn {
-  border-radius: 8px;
-  background-color: rgba(44, 44, 44, 1);
-  color: var(--Accent, #ff6f61);
-  flex: 1;
-  padding: 8px;
-  border: 1px solid rgba(44, 44, 44, 1);
-  cursor: pointer;
-}
-
-.bold-text {
-  font-weight: 700;
-}
-
-@media (max-width: 991px) {
-  .nav-container {
-    padding: 0 20px;
-  }
-  
-  .nav-links {
-    max-width: 100%;
-  }
+.explore-button{
+  background-color: rgb(217, 204, 204);
 }
 
 .visually-hidden {

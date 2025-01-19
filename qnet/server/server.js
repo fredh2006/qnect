@@ -42,19 +42,20 @@ const personSchema = new mongoose.Schema({
   age: { type: Number, required: true },
   location: { type: String, required: true },
   questions: { type: Map, of: String, required: true },
-  email: { unique: true, type: String, required: true},
+  email: { unique: true, type: String, required: true },
   password: { type: String, required: true },
   likes: { type: [String], default: [] },
   matches: { type: [String], default: [] },
-  
+  matchScores: { type: Map, of: Number, default: {} } // New field for match scores
 });
+
 const Person = mongoose.model("Person", personSchema);
 app.post("/api/person", (req, res) => {
-  const { name, about, social_media, sexuality, gender, age, location, questions, email, password, likes, matches } = req.body;
-  if (!name || !about || !social_media || !sexuality || !gender || !age || !location || !questions || !email || !password || !likes || !matches) {
+  const { name, about, social_media, sexuality, gender, age, location, questions, email, password, likes, matches, matchScores } = req.body;
+  if (!name || !about || !social_media || !sexuality || !gender || !age || !location || !questions || !email || !password || !likes || !matches, !matchScores) {
     return res.status(400).send({ success: false, message: "All fields are required." });
   }
-  const newPerson = new Person({ name, about, social_media, sexuality, gender, age, location, questions, email, password, likes, matches });
+  const newPerson = new Person({ name, about, social_media, sexuality, gender, age, location, questions, email, password, likes, matches, matchScores});
   newPerson.save()
     .then(savedPerson => {
       res.status(200).send({
@@ -68,6 +69,34 @@ app.post("/api/person", (req, res) => {
       res.status(500).send({ success: false, message: "Error saving person", error: err });
     });
 });
+
+app.post("/api/person/:id/matchScore", async (req, res) => {
+  const personId = req.params.id;
+  const { matchId, score } = req.body;
+
+  if (!matchId || score === undefined) {
+    return res.status(400).send({ success: false, message: "Match ID and score are required" });
+  }
+
+  try {
+    // Find the person by ID
+    const person = await Person.findById(personId);
+    if (!person) {
+      return res.status(404).send({ success: false, message: "Person not found" });
+    }
+
+    // Update the match score
+    person.matchScores.set(matchId, score);
+
+    // Save the updated person
+    await person.save();
+
+    res.status(200).send({ success: true, message: "Match score updated successfully", person });
+  } catch (err) {
+    res.status(500).send({ success: false, message: "Error updating match score", error: err.message });
+  }
+});
+
 
 app.get("/api/people", (req, res) => {
   Person.find()
@@ -173,6 +202,36 @@ app.post("/api/person/:id/match", (req, res) => {
             res.status(500).send({ success: false, message: "Error processing like", error: err });
         });
 });
+
+
+// Endpoint to check if the user with `userId` has liked the person with `likedId`
+app.get("/api/person/:likedId/likes/:userId", async (req, res) => {
+  const likedId = req.params.likedId;
+  const userId = req.params.userId;
+
+  try {
+    // Find the person who is being liked
+    const likedPerson = await Person.findById(likedId);
+    if (!likedPerson) {
+      return res.status(404).send({ success: false, message: "Liked person not found" });
+    }
+
+    // Check if the user has liked the liked person
+    const likedByUser = likedPerson.likes.includes(userId);
+    
+    res.status(200).send({
+      success: true,
+      likedByUser,
+    });
+  } catch (err) {
+    res.status(500).send({
+      success: false,
+      message: "Error checking if person liked the user",
+      error: err.message,
+    });
+  }
+});
+
 
 app.get("/api/people/location/:location/user/:userId", async (req, res) => {
   const location = req.params.location;

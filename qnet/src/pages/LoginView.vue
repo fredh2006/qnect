@@ -42,6 +42,9 @@ export default {
         if (this.password == response.data.person.password){
           console.log('logged in')
           this.$router.push('/dashboard')
+          console.log(response.data.person)
+          sessionStorage.setItem('userId', response.data.person._id);  // Save the user ID
+          sessionStorage.setItem('location', response.data.person.location);
         }else{
           this.showError = true;
           this.errorMessage = "Wrong password";

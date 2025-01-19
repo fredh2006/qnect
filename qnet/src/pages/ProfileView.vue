@@ -172,6 +172,7 @@ export default {
     "password": sessionStorage.getItem('password'),
     "matches": [],
     "likes": [],
+    "matchScores": []
   });
 
   let config = {
