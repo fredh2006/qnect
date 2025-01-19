@@ -1,30 +1,26 @@
 <template>
-<header class="nav-header" role="banner">
+    <header class="nav-header" role="banner">
       <nav class="nav-container" role="navigation" aria-label="Main navigation">
         <div class="logo-container">
-          <div @click = "goHome"class="logo-wrapper">
-            <img
-              loading="lazy"
-              src="/public/qc_logo.png"
-              class="logo-image"
-              alt="Company Logo"
-            />
+          <div @click="goHome" class="logo-wrapper">
+            <img loading="lazy" src="/public/qc_logo.png" class="logo-image" alt="Company Logo" />
           </div>
         </div>
-                
+
         <ul class="nav-links" role="menubar">
           <li role="none">
             <a href="#" class="nav-item explore-button" role="menuitem" tabindex="0">Our Mission</a>
           </li>
           <li role="none">
-            <a href="/login" class="nav-item active" role="menuitem" tabindex="0">Log In</a>
+            <a href="/login" class="nav-item matches-button" role="menuitem" tabindex="0">Sign In</a>
           </li>
           <li role="none">
-            <a href="/register" class="nav-item chat-button" role="menuitem" tabindex="0">Register</a>
+            <a href="/register" class="nav-item dashboard-button" role="menuitem" tabindex="0">Register</a>
           </li>
         </ul>
       </nav>
     </header>
+
   <main class="hero-section" role="main">
     <section class="content-wrapper">
       <h1 class="main-title">Qnect</h1>
@@ -69,8 +65,10 @@ html, body {
 }
 
 .nav-header {
-  background: #fff;
-  border-bottom: 1px solid #d9d9d9;
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(255, 111, 97, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
 }
 
 .nav-container {
@@ -79,12 +77,20 @@ html, body {
   gap: 24px;
   padding: 0 24px;
   height: 64px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.logo-container, .logo-wrapper {
+.logo-container,
+.logo-wrapper {
   display: flex;
   align-items: center;
   width: 100px;
+  transition: transform 0.2s ease;
+}
+
+.logo-wrapper:hover {
+  transform: scale(1.05);
 }
 
 .logo-image {
@@ -92,6 +98,34 @@ html, body {
   object-fit: contain;
   width: 64px;
   height: auto;
+}
+
+.search-container {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 24px;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: 2px solid rgba(255, 111, 97, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  color: #1b263b;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #ff6f61;
+  box-shadow: 0 0 0 4px rgba(255, 111, 97, 0.1);
+}
+
+.search-input::placeholder {
+  color: rgba(27, 38, 59, 0.5);
 }
 
 .nav-links {
@@ -110,21 +144,70 @@ html, body {
   text-decoration: none;
   color: #1b263b;
   transition: all 0.2s ease;
+  font-weight: 500;
+  position: relative;
+  background: transparent;
 }
 
-.nav-item.active {
-  background-color: #865a5a;
-  color: #FFF;
+.nav-item-profile {
+  border-radius: 8px;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #1b263b;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  position: relative;
+  background: transparent;
 }
 
-.chat-button{
-  background-color: rgba(27, 38, 59, 1);
-  border-color: rgba(27, 38, 59, 1);;
+.nav-item:hover {
   color: #ff6f61;
+  background: rgba(255, 111, 97, 0.1);
 }
 
-.explore-button{
-  background-color: rgb(217, 204, 204);
+.matches-button {
+  background-color: #ff6f61;
+  color: white;
+}
+
+/* Add this if you want a subtle indicator under non-active nav items on hover */
+.nav-item:not(.active)::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #ff6f61;
+  transition: all 0.2s ease;
+  transform: translateX(-50%);
+}
+
+.nav-item:not(.active):hover::after {
+  width: 30px;
+}
+
+.dashboard-button {
+    background-color: rgba(27, 38, 59, 1);
+    border-color: rgba(27, 38, 59, 1);
+    color: #ff6f61;
+}
+
+.chat-button {
+  background-color: #ff6f61;
+  border-color: #ff6f61;
+  color: rgba(27, 38, 59, 1);
+}
+
+.explore-button {
+  background-color: rgb(222, 205, 205);
+  border-color: rgb(222, 205, 205);
+}
+
+.profile-button {
+  background-color: rgba(27, 38, 59, 1);
+  border-color: rgb(27, 38, 59);
+  border-radius: 100px;
 }
 
 .visually-hidden {
