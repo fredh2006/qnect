@@ -1,5 +1,5 @@
 <template>
-    
+  <div class="gradient-background">
     <header class="nav-header" role="banner">
       <nav class="nav-container" role="navigation" aria-label="Main navigation">
         <div class="logo-container">
@@ -10,78 +10,76 @@
 
         <ul class="nav-links" role="menubar">
           <li role="none">
-            <a href="/dashboard" class="nav-item explore-button" role="menuitem" tabindex="0">Dashboard</a>
+            <a href="/explore" class="nav-item explore-button" role="menuitem" tabindex="0">Explore</a>
           </li>
           <li role="none">
             <a href="/matches" class="nav-item matches-button" role="menuitem" tabindex="0">Matches</a>
           </li>
           <li role="none">
-            <a href="/chatbot" class="nav-item chat-button" role="menuitem" tabindex="0">ChatBot</a>
+            <a href="/dashboard" class="nav-item dashboard-button" role="menuitem" tabindex="0">Dashboard</a>
           </li>
           <li role="none">
-            <a href="/yourprofile" class="nav-item-profile profile-button" role="menuitem" tabindex="0"><div style = "position: absolute; margin-left: 11px; font-weight: 700;">P</div></a>
+            <a href="/yourprofile" class="nav-item-profile profile-button" role="menuitem" tabindex="0"><div style="position: absolute; margin-left: 11px; font-weight: 700;">P</div></a>
           </li>
         </ul>
       </nav>
     </header>
-    <div class="explore-page">
 
-      <main>
-        <h1>Explore Our Articles</h1>
-        <br>
-        <br>
-        <div class="articles">
-          <article class="card">
-            <img src="../assets/a1.png" alt="Article 1" />
-            <h2>Everything I Learned About Dating in 2023</h2>
-            <p>By Annie Lord</p>
-            <a  href="https://www.vogue.com/article/everything-i-learned-about-dating-in-2023"><button>Read More</button></a>
+    <main class="hero-section">
+      <div class="content-container">
+        <h1 class="main-title">Explore Our Articles</h1>
+        
+        <div class="articles-grid">
+          <article class="article-card">
+            <div class="card-image">
+              <img src="../assets/a1.png" alt="Article 1" />
+            </div>
+            <div class="card-content">
+              <h2>Everything I Learned About Dating in 2023</h2>
+              <p class="author">By Annie Lord</p>
+              <a href="https://www.vogue.com/article/everything-i-learned-about-dating-in-2023" target="_blank">
+                <button class="primary-button">Read More</button>
+              </a>
+            </div>
           </article>
-          <article class="card">
-            <img src="../assets/a2.jpg" alt="Article 2" />
-            <h2>Dating Tips: 15 Pieces of Advice to Help You Build a Healthy New Relationship</h2>
-            <p>By Jose Santi</p>
-            <a target=”_blank” href="https://theeverygirl.com/new-relationship-advice/"><button>Read More</button></a>
+
+          <article class="article-card">
+            <div class="card-image">
+              <img src="../assets/a2.jpg" alt="Article 2" />
+            </div>
+            <div class="card-content">
+              <h2>Dating Tips: 15 Pieces of Advice</h2>
+              <p class="author">By Jose Santi</p>
+              <a href="https://theeverygirl.com/new-relationship-advice/" target="_blank">
+                <button class="primary-button">Read More</button>
+              </a>
+            </div>
           </article>
-          <article class="card">
-            <img src="../assets/a3.png" alt="Article 3" />
-            <h2>NBA Superstar on maintaing healthy relationships and Dating Advice</h2>
-            <a target=”_blank” href="https://www.yahoo.com/entertainment/shai-gilgeous-alexander-girlfriend-hailey-050619503.html"><button @click="viewArticle(3)">Read More</button></a>
+
+          <article class="article-card">
+            <div class="card-image">
+              <img src="../assets/a3.png" alt="Article 3" />
+            </div>
+            <div class="card-content">
+              <h2>NBA Star on Healthy Relationships</h2>
+              <p class="author">By David Gonzalez</p>
+              <a href="https://www.yahoo.com/entertainment/shai-gilgeous-alexander-girlfriend-hailey-050619503.html" target="_blank">
+                <button class="primary-button">Read More</button>
+              </a>
+            </div>
           </article>
         </div>
-      </main>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    methods: {
-      goHome() {
-        this.$router.push('/');
-      },
-   
-    }
-  };
-  </script>
-  
-  <style scoped>
+      </div>
+    </main>
+  </div>
+</template>
 
-.nav-header {
+<style scoped>
+ .nav-header {
   background: rgba(255, 255, 255, 0.95);
   border-bottom: 1px solid rgba(255, 111, 97, 0.1);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   backdrop-filter: blur(10px);
-}
-
-main h1{
-    font-size: 3rem; /* Makes the text larger */
-  font-weight: bold; /* Makes the text bold */
-  text-align: left; /* Aligns the text to the left */
-  width: 100%; /* Ensure it takes full width of its container */
-  margin: 0; /* Remove any default margin */
-  padding-left: 20px; /* Adds space from the left */
-  color: #1b263b; /* Optional: Customize the text color */
-  font-size: 26px;
 }
 
 .nav-container {
@@ -201,15 +199,15 @@ main h1{
 }
 
 .dashboard-button {
-  background-color: rgba(27, 38, 59, 1);
-  border-color: rgba(27, 38, 59, 1);
-  color: #ff6f61;
-}
-
-.chat-button {
     background-color: rgba(27, 38, 59, 1);
     border-color: rgba(27, 38, 59, 1);
     color: #ff6f61;
+}
+
+.chat-button {
+  background-color: #ff6f61;
+  border-color: #ff6f61;
+  color: rgba(27, 38, 59, 1);
 }
 
 .explore-button {
@@ -220,122 +218,147 @@ main h1{
 .profile-button {
   background-color: rgba(27, 38, 59, 1);
   border-color: rgb(27, 38, 59);
-  border-radius: 100px;
+  border-radius: 1000px;
   color: white;
 }
+.gradient-background {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff6f61, white);
+}
 
-  .explore-page {
-    font-family: Arial, sans-serif;
-    color: #1b263b;
-    background: linear-gradient(135deg, #ff6f61, white);
-    min-height: 100vh;
-    padding: 0;
-    margin: 0;
+.hero-section {
+  padding: 40px 24px;
+  position: relative;
+}
+
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.main-title {
+  color: #1b263b;
+  font-size: 42px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 40px;
+  letter-spacing: -1px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 32px;
+  padding: 20px;
+}
+
+.article-card {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding:15px;
+}
+
+.article-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.card-image {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background: rgba(27, 38, 59, 0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  background: rgba(27, 38, 59, 0.03);
+}
+
+.article-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+.card-content {
+  padding: 24px;
+}
+
+.card-content h2 {
+  color: #1b263b;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+
+.author {
+  color: #ff6f61;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.primary-button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(45deg, #1b263b, #2d3f59);
+  border: none;
+  border-radius: 12px;
+  color: #ff6f61;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(27, 38, 59, 0.2);
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(27, 38, 59, 0.3);
+  background: linear-gradient(45deg, #2d3f59, #1b263b);
+}
+
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 32px;
+    margin-bottom: 24px;
   }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background-color: rgba(255, 255, 255, 0.95);
-    border-bottom: 1px solid rgba(255, 111, 97, 0.1);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(10px);
+
+  .articles-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 12px;
   }
-  
-  .nav {
-    display: flex;
-    align-items: center;
+
+  .card-content {
+    padding: 20px;
   }
-  
-  .logo img {
-    width: 64px;
-    cursor: pointer;
+
+  .card-content h2 {
+    font-size: 1.3rem;
   }
-  
-  .nav-menu {
-    list-style: none;
-    display: flex;
-    gap: 1rem;
-    margin: 0;
-    padding: 0;
+}
+</style>
+
+<script>
+export default {
+  methods: {
+    goHome() {
+      this.$router.push('/');
+    }
   }
-  
-  .nav-menu a {
-    text-decoration: none;
-    color: #1b263b;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    transition: all 0.2s ease;
-  }
-  
-  .nav-menu a.active {
-    background: #ff6f61;
-    color: white;
-  }
-  
-  .nav-menu a:hover {
-    background: rgba(255, 111, 97, 0.1);
-  }
-  
-  main {
-    padding: 2rem;
-    text-align: center;
-  }
-  
-  .articles {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
-  }
-  
-  .card {
-    background: rgba(255, 255, 255, 0.97);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease;
-  }
-  
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
-  }
-  
-  .card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-  }
-  
-  .card h2 {
-    font-size: 1.5rem;
-    color: #1b263b;
-    margin: 1rem;
-  }
-  
-  .card p {
-    font-size: 1rem;
-    color: #555;
-    margin: 0 1rem 1rem;
-  }
-  
-  .card button {
-    margin: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: #ff6f61;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-  }
-  
-  .card button:hover {
-    background-color: rgba(255, 111, 97, 0.9);
-  }
-  </style>
+};
+</script>
   

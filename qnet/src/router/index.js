@@ -12,7 +12,8 @@ const router = createRouter({
       { path: '/matches', name: 'alreadyMatched', component: () =>import('../pages/alreadyMatched.vue')},
       { path: '/chat', name: 'chat', component: () =>import('../pages/TestChat.vue')},
       { path: '/yourprofile', name: 'yourprofile', component: () => import('../pages/PersonProfileView.vue')},
-      { path: '/explore', name: 'explore', component: () => import('../pages/Explore.vue')}
+      { path: '/explore', name: 'explore', component: () => import('../pages/Explore.vue')},
+      { path: '/ourmission', name: 'ourmission', component: () => import('../pages/OurMission.vue')}
 
     ]
   })

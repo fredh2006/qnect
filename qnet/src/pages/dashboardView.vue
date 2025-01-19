@@ -11,7 +11,7 @@
 
         <ul class="nav-links" role="menubar">
           <li role="none">
-            <a href="#" class="nav-item explore-button" role="menuitem" tabindex="0">Explore</a>
+            <a href="/explore" class="nav-item explore-button" role="menuitem" tabindex="0">Explore</a>
           </li>
           <li role="none">
             <a href="/matches" class="nav-item matches-button" role="menuitem" tabindex="0">Matches</a>

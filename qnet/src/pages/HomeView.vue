@@ -9,7 +9,7 @@
 
         <ul class="nav-links" role="menubar">
           <li role="none">
-            <a href="#" class="nav-item explore-button" role="menuitem" tabindex="0">Our Mission</a>
+            <a href="/ourmission" class="nav-item explore-button" role="menuitem" tabindex="0">Our Mission</a>
           </li>
           <li role="none">
             <a href="/login" class="nav-item matches-button" role="menuitem" tabindex="0">Sign In</a>
