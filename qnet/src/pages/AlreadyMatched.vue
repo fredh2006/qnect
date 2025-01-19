@@ -73,6 +73,15 @@
                   <p>{{ answer }}</p>
                 </div>
               </div>
+
+              <div class="chat-button-container">
+                <router-link :to="`/chat`" class="chat-link">
+                  <button class="chat-button">
+                    <span class="chat-icon">💬</span>
+                    Start Chat
+                  </button>
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -199,6 +208,9 @@ export default {
 
 .card-content {
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card-title {
@@ -253,10 +265,8 @@ export default {
 }
 
 .questions-box {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  flex: 1;
+  margin-bottom: 16px;
 }
 
 .qna {
@@ -520,6 +530,45 @@ export default {
   color: #fff;
   opacity: 0.9;
   position: relative;
+}
+
+.chat-button-container {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.chat-link {
+  text-decoration: none;
+  width: 100%;
+}
+
+.chat-button {
+  width: 100%;
+  padding: 12px 24px;
+  background: linear-gradient(45deg, #1b263b, #2d3f59);
+  border: none;
+  border-radius: 12px;
+  color: #ff6f61;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px rgba(27, 38, 59, 0.2);
+}
+
+.chat-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(27, 38, 59, 0.3);
+  background: linear-gradient(45deg, #2d3f59, #1b263b);
+}
+
+.chat-icon {
+  font-size: 1.2rem;
 }
 </style>
   
