@@ -1,189 +1,439 @@
 <template>
-  <link href="https://fonts.googleapis.com/css2?family=Lily+Script+One&family=Katibeh&display=swap" rel="stylesheet">
-  <div class="dashboard-layout">
-    <aside class="sidebar">
-      <img
-        loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/d8b11bede3620921516c0a3e35d8b5bab2338ed9ccb42824992b410b5b13f263?apiKey=3c4b34a732e840c294b3a88a3f1fd290&"
-        class="logo"
-        alt="Company logo"
-      />
-      <nav class="nav-menu">
-        <a href="#" class="nav-item">Explore</a>
-        <a href="#" class="nav-item">Matches</a>
-        <a href="#" class="nav-item">ChatBot</a>
+  <div>
+    <header class="nav-header" role="banner">
+      <nav class="nav-container" role="navigation" aria-label="Main navigation">
+        <div class="logo-container">
+          <div @click = "goHome"class="logo-wrapper">
+            <img
+              loading="lazy"
+              src="/public/qc_logo.png"
+              class="logo-image"
+              alt="Company Logo"
+            />
+          </div>
+        </div>
+        
+        <div class="search-container">
+          <input type="search" placeholder="Search" class="search-input">
+        </div>
+        
+        <ul class="nav-links" role="menubar">
+          <li role="none">
+            <a href="#" class="nav-item explore-button" role="menuitem" tabindex="0">Explore</a>
+          </li>
+          <li role="none">
+            <a href="/matches" class="nav-item active" role="menuitem" tabindex="0">Match</a>
+          </li>
+          <li role="none">
+            <a href="/chatbot" class="nav-item chat-button" role="menuitem" tabindex="0">ChatBot</a>
+          </li>
+          <li role="none">
+            <a href="/chatbot" class="nav-item profile-button" role="menuitem" tabindex="0"></a>
+          </li>
+        </ul>
       </nav>
-    </aside>
-    
-    <main class="main-content">
-      <header class="search-bar">
-        <input type="search" placeholder="search" class="search-input">
-      </header>
-      
-      <h1 class="dashboard-title">Welcome</h1>
-      
-      <div class="profile-card">
-        <div class="profile-info">
-          <p class="profile-name">**Name**</p>
-          <p class="profile-age">**Age**</p>
-          <p class="profile-location">**location**</p>
+    </header>
+
+    <main class="hero-section">
+      <div class="matches-container">
+        <h1 class="main-title">People Near You</h1>
+        <div v-if="people.length === 0" class="no-matches">No matches found in your area. Where do you live??</div>
+        <div class="card-container" v-if="people.length > 0">
+          <transition name="fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
+            <div class="card" :key="people[currentIndex]._id">
+              <div class="card-content">
+                <h2 class="card-title">{{ people[currentIndex].name }}</h2>
+                <div class="info-grid">
+                  <p><strong>Age:</strong> {{ people[currentIndex].age }}</p>
+                  <p><strong>Gender:</strong> {{ people[currentIndex].gender }}</p>
+                  <p><strong>Location:</strong> {{ people[currentIndex].location }}</p>
+                </div>
+                <div class="questions-box">
+                  <h3 class = "qna">Questions & Answers:</h3>
+                  <div v-for="(answer, question) in people[currentIndex].questions" 
+                       :key="question" 
+                       class="question-answer">
+                    <p><strong>{{ question }}:</strong> {{ answer }}</p>
+                  </div>
+                </div>
+                <button class="primary-button" @click="likePerson(people[currentIndex]._id)">
+                  Like
+                </button>
+              </div>
+            </div>
+          </transition>
+
+          <div class="carousel-buttons">
+            <button class="carousel-arrow left-arrow" @click="moveCarousel('left')">&#8592;</button>
+            <button class="carousel-arrow right-arrow" @click="moveCarousel('right')">&#8594;</button>
+          </div>
         </div>
-        
-        <div class="questions">
-          <p class="question">Question 1:</p>
-          <p class="question">Question 2:</p>
-          <p class="question">Question 3:</p>
+
+        <div class="indicator-container">
+          <span v-for="(person, index) in people" 
+                :key="person._id" 
+                :class="['indicator', { active: currentIndex === index }]" 
+                @click="goToIndex(index)">
+          </span>
         </div>
-        
-        <div class="action-buttons">
-          <button class="reject-btn" aria-label="Reject">✕</button>
-          <button class="bookmark-btn" aria-label="Bookmark">☆</button>
-          <button class="accept-btn" aria-label="Accept">✓</button>
-        </div>
+
+        <div v-if="notification" class="notification">{{ notification }}</div>
       </div>
     </main>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+
+export default {
+ data() {
+   return {
+     people: [],
+     location: sessionStorage.getItem('location'), // Replace with dynamic user location if available
+     userId: sessionStorage.getItem('userId'), // Replace with actual logged-in user ID
+     notification: "",
+     currentIndex: 0,
+   };
+ },
+ methods: {
+  goHome(){
+    this.$router.push('/');
+  },
+   fetchPeopleByLocation() {
+     axios
+       .get(`http://localhost:3000/api/people/location/${this.location}/user/${this.userId}`)
+       .then((response) => {
+         if (response.data.success) {
+           this.people = response.data.people;
+         } else {
+           console.error("Error fetching people:", response.data.message);
+         }
+       })
+       .catch((error) => {
+         console.error("Error fetching people:", error);
+       });
+   },
+   likePerson(likedId) {
+axios
+ .post(`http://localhost:3000/api/person/${this.userId}/like`, {
+   likedId,
+ })
+ .then((response) => {
+   if (response.data.success) {
+     this.notification = "You liked someone!";
+     // Remove the liked person from the carousel
+     this.people = this.people.filter(person => person._id !== likedId);
+     
+     // Adjust the currentIndex to stay within bounds
+     if (this.currentIndex >= this.people.length) {
+       this.currentIndex = Math.max(0, this.people.length - 1);
+     }
+
+     // Clear notification after 3 seconds
+     setTimeout(() => {
+       this.notification = "";
+     }, 3000);
+   } else {
+     console.error("Error liking person:", response.data.message);
+   }
+ })
+ .catch((error) => {
+   console.error("Error liking person:", error);
+ });
+},
+
+   moveCarousel(direction) {
+     if (direction === "left") {
+       if (this.currentIndex > 0) {
+         this.currentIndex--;
+       } else {
+         this.currentIndex = this.people.length - 1; // Loop to the last person
+       }
+     } else if (direction === "right") {
+       if (this.currentIndex < this.people.length - 1) {
+         this.currentIndex++;
+       } else {
+         this.currentIndex = 0; // Loop to the first person
+       }
+     }
+   },
+   goToIndex(index) {
+     this.currentIndex = index;
+   },
+
+   // Transition hooks
+   beforeEnter(el) {
+     el.style.opacity = 0;
+     el.style.display = "block";
+   },
+   enter(el, done) {
+     el.offsetHeight; // trigger reflow to apply transition
+     el.style.transition = "opacity 0.5s ease-in-out";
+     el.style.opacity = 1;
+     done();
+   },
+   leave(el, done) {
+     el.style.transition = "opacity 0.5s ease-in-out";
+     el.style.opacity = 0;
+     done();
+   },
+ },
+ mounted() {
+   this.fetchPeopleByLocation();
+ },
+};
+</script>
+
 <style scoped>
-.dashboard-layout {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  min-height: 100vh;
-  background-color: #ff6f61;
+.nav-header {
+  background: #fff;
+  border-bottom: 1px solid #d9d9d9;
 }
-.sidebar {
-  background-color: #ff6f61;
-  padding: 2rem;
-  border-right: 2px solid rgba(255, 255, 255, 0.2);
-}
-.logo {
-  font-family: 'Katibeh', cursive;
-  font-size: 2.5rem;
-  color: white;
-  margin-bottom: 3rem;
-}
-.nav-menu {
+
+.nav-container {
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
   align-items: center;
-  margin-top: 15vh;
-  width: 100%;
+  gap: 24px;
+  padding: 0 24px;
+  height: 64px;
 }
+
+.logo-container, .logo-wrapper {
+  display: flex;
+  align-items: center;
+  width: 100px;
+}
+
+.logo-image {
+  aspect-ratio: 0.69;
+  object-fit: contain;
+  width: 64px;
+  height: auto;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin-left: auto;
+}
+
 .nav-item {
-  font-family: 'Katibeh', cursive;
-  color: white;
+  border-radius: 8px;
+  padding: 8px 16px;
   text-decoration: none;
-  font-size: 2.2rem;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  background-color: rgba(255, 255, 255, 0.2);
-  width: 90%;
+  color: #1b263b;
+  transition: all 0.2s ease;
+}
+
+.nav-item.active {
+  background-color: #865a5a;
+  color: #FFF;
+}
+
+.chat-button{
+  background-color: rgba(27, 38, 59, 1);
+  border-color: rgba(27, 38, 59, 1);;
+  color: #ff6f61;
+}
+
+.explore-button{
+  background-color: rgb(217, 204, 204);
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #ff6f61, white);
+  min-height: calc(100vh - 64px);
+  padding: 40px 24px;
+}
+
+.no-matches{
   text-align: center;
 }
-.main-content {
-  padding: 2rem;
-}
-.search-bar {
-  margin-bottom: 2rem;
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding-top: 0.5rem;
-}
-.search-bar::after {
-  content: '';
-  position: absolute;
-  bottom: -1rem;
-  left: -200px;
-  right: -2rem;
-  height: 2px;
-  background-color: rgba(255, 255, 255, 0.3);
-}
-.search-input {
-  font-family: 'Katibeh', cursive;
-  width: 100%;
-  padding: 0.8rem 1.5rem;
-  border-radius: 25px;
-  border: none;
-  background-color: rgba(255, 255, 255, 0.3);
-  color: white;
-  font-size: 1.6rem;
-}
-.search-input::placeholder {
-  color: rgba(255, 255, 255, 0.8);
-}
-.dashboard-title {
-  font-family: 'Katibeh', cursive;
-  color: white;
-  font-size: 3rem;
-  margin-bottom: 2rem;
-}
-.profile-card {
-  background-color: #f5f5f5;
-  border-radius: 20px;
-  padding: 2rem;
-  max-width: 600px;
+
+.matches-container {
+  max-width: 800px;
   margin: 0 auto;
 }
-.profile-info {
+
+.main-title {
+  color: rgba(27, 38, 59, 1);
+  letter-spacing: -2.16px;
+  font-size: 42px;
+  font-weight: 700;
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 32px;
 }
-.profile-name {
-  font-family: 'Lily Script One', cursive;
-  font-size: 1.8rem;
-  margin-bottom: 0.05rem;
+
+.card-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  padding-left: 48px;
+  padding-right: 48px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
-.profile-age {
-  font-family: 'Katibeh', cursive;
-  font-size: 1.4rem;
-  margin-bottom: 0.05rem;
-}
-.profile-location {
-  font-family: 'Katibeh', cursive;
-  font-size: 1.4rem;
-  margin-bottom: 0;
-}
-.questions {
-  margin-bottom: 4rem;
+
+.card-content {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
+  gap: 16px;
 }
-.question {
-  font-family: 'Lily Script One', cursive;
-  font-size: 1.5rem;
+
+.card-title {
+  color: #ff6f61;
+  font-size: 1.8rem;
   margin: 0;
+  padding-left: 16px;
+  font-weight: 600;
 }
-.action-buttons {
+
+.info-grid {
+  display: grid;
+  gap: 5px;
+  padding-left: 16px
+}
+
+.qna{
+  color: #ff6f61;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.questions-box {
+  background: rgba(239, 232, 232, 0.8);
+  border-radius: 8px;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.question-answer {
+  margin-bottom: 5px;
+}
+
+.primary-button {
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  background-color: rgba(27, 38, 59, 1);
+  padding: 12px;
+  border: 1px solid rgba(27, 38, 59, 1);
+  color: #ff6f61;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 700;
+}
+
+.primary-button:hover {
+  transform: translateY(-2px);
+  outline: 2px solid #ff6f61;
+  outline-offset: 2px;
+}
+
+.carousel-buttons {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  margin: 10px;
+  
+}
+
+.carousel-arrow {
+  background-color: #1b263b;
+  color: #ff6f61;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.carousel-arrow:hover {
+  transform: scale(1.1);
+}
+
+.indicator-container {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 8px;
+  margin-top: 24px;
 }
-.action-buttons button {
-  width: 50px;
-  height: 50px;
+
+.indicator {
+  width: 8px;
+  height: 8px;
+  background-color: rgba(27, 38, 59, 0.3);
   border-radius: 50%;
-  border: none;
   cursor: pointer;
-  font-size: 1.5rem;
+  transition: background-color 0.2s ease;
 }
-.reject-btn {
-  background-color: #ff4444;
+
+.indicator.active {
+  background-color: #1b263b;
+}
+
+.notification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #ff6f61;
   color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  animation: fadeIn 0.3s ease-in-out;
 }
-.bookmark-btn {
-  background-color: white;
-  border: 2px solid #666!important;
+
+.search-container {
+  flex: 1;
+  max-width: 400px;
+  margin: 0 24px;
 }
-.accept-btn {
-  background-color: #00C851;
-  color: white;
+
+.search-input {
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid #d9d9d9;
+  transition: all 0.2s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #ff6f61;
+  box-shadow: 0 0 0 2px rgba(255, 111, 97, 0.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 991px) {
+  .matches-container {
+    padding: 0 20px;
+  }
+  
+  .card-container {
+    padding: 20px;
+  }
 }
 </style>
-<script>
-export default {
-  name: 'DashboardView'
-}
-</script>
