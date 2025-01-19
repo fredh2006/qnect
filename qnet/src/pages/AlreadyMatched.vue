@@ -1,39 +1,43 @@
 <template>
-    <div class="page-container">
-      <!-- Left sidebar (empty for now, as requested) -->
-      <aside class="sidebar">
-        <!-- future sidebar content -->
-      </aside>
-  
-      <!-- Main content area -->
-      <section class="main-content">
-        <h1>Your Matches</h1>
-        
-        <!-- Grid of matched people cards -->
-        <div class="matches-grid">
-          <!-- Loop through matchedPeople and render a card for each -->
-          <div
-            v-for="(person, index) in matchedPeople"
-            :key="person._id"
-            class="match-card"
-          >
-            <h3>{{ person.name }}</h3>
-            <p><strong>Age:</strong> {{ person.age }}</p>
-            <p><strong>Location:</strong> {{ person.location }}</p>
-            <p><strong>About:</strong> {{ person.about }}</p>
-            <!-- Sample display of 'questions' -->
-            <p>
-              <strong>Questions:</strong><br />
-              Favorite color: {{ person.questions.favorite_color }}<br />
-              Hobbies: {{ person.questions.hobbies }}<br />
-              Dream job: {{ person.questions.dream_job }}<br />
-              Match Score: {{ person.matchScore }}
-            </p>
+  <div class="page-container">
+    <!-- Left sidebar (empty for now, as requested) -->
+    <aside class="sidebar">
+      <!-- future sidebar content -->
+    </aside>
+
+    <!-- Main content area -->
+    <section class="main-content">
+      <h1>Your Matches</h1>
+
+      <!-- Grid of matched people cards -->
+      <div class="matches-grid">
+        <!-- Loop through matchedPeople and render a card for each -->
+        <div
+          v-for="(person, index) in matchedPeople"
+          :key="person._id"
+          class="match-card"
+        >
+          <h3>{{ person.name }}</h3>
+          <p><strong>Age:</strong> {{ person.age }}</p>
+          <p><strong>Location:</strong> {{ person.location }}</p>
+          <p><strong>About:</strong> {{ person.about }}</p>
+          <p><strong>Match Score:</strong> {{ person.matchScore }}</p>
+
+          <!-- Dynamically render all questions and answers -->
+          <div>
+            <strong>Questions:</strong>
+            <ul>
+              <li v-for="(answer, question) in person.questions" :key="question">
+                <strong>{{ question }}:</strong> {{ answer }}
+              </li>
+            </ul>
           </div>
         </div>
-      </section>
-    </div>
-  </template>
+      </div>
+    </section>
+  </div>
+</template>
+
   
   <script>
   import axios from 'axios';
