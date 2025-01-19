@@ -58,12 +58,12 @@
 
           <article class="article-card">
             <div class="card-image">
-              <img src="../assets/a3.png" alt="Article 3" />
+              <img src="../assets/a3.jpg" alt="Article 3" />
             </div>
             <div class="card-content">
-              <h2>NBA Star on Healthy Relationships</h2>
-              <p class="author">By David Gonzalez</p>
-              <a href="https://www.yahoo.com/entertainment/shai-gilgeous-alexander-girlfriend-hailey-050619503.html" target="_blank">
+              <h2>Change Your Mind About Dating</h2>
+              <p class="author">Mark Manson</p>
+              <a href="https://markmanson.net/change-your-mind" target="_blank">
                 <button class="primary-button">Read More</button>
               </a>
             </div>
