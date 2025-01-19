@@ -42,7 +42,7 @@
     name: 'MatchesPage',
     data() {
       return {
-        userId: '678c6e6c78c5e2be19081b35',// sessionStorage.getItem('userId'), // example user ID
+        userId: sessionStorage.getItem('userId'),// sessionStorage.getItem('userId'), // example user ID
         matchedPeople: [],
       };
     },
