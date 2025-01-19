@@ -26,7 +26,8 @@
               <strong>Questions:</strong><br />
               Favorite color: {{ person.questions.favorite_color }}<br />
               Hobbies: {{ person.questions.hobbies }}<br />
-              Dream job: {{ person.questions.dream_job }}
+              Dream job: {{ person.questions.dream_job }}<br />
+              Match Score: {{ person.matchScore }}
             </p>
           </div>
         </div>
@@ -41,7 +42,7 @@
     name: 'MatchesPage',
     data() {
       return {
-        userId: sessionStorage.getItem('userId'), // example user ID
+        userId: '678c6e6c78c5e2be19081b35',// sessionStorage.getItem('userId'), // example user ID
         matchedPeople: [],
       };
     },
@@ -55,9 +56,15 @@
           const response = await axios.get(`http://localhost:3000/api/person/${this.userId}/matches`);
           if (response.data.success) {
             console.log('Matches:', response.data);
-            // The response has a "matches" array with people objects
-            this.matchedPeople = response.data.matches;
-          }
+
+            this.matchedPeople = response.data.matches.map(person => {
+              const matchScore = person.matchScores[this.userId] || 0; // Default to 0 if not found
+              return {
+                ...person,
+                matchScore,
+              };
+            });
+              }
         } catch (error) {
           console.error('Error fetching matches:', error);
         }
