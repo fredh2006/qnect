@@ -194,7 +194,7 @@ export default {
         sessionStorage.setItem('userId', response.data.personId);  // Save the user ID
         sessionStorage.setItem('location', this.location);
       }
-      this.$router.push('/matches');
+      this.$router.push('/dashboard');
     })
     .catch((error) => {
       console.log(error);
