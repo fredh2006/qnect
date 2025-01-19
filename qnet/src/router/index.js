@@ -11,6 +11,7 @@ const router = createRouter({
       { path: '/dashboard', name: 'dashboard', component: () =>import('../pages/dashboardView.vue')},
       { path: '/matches', name: 'matches', component: () =>import('../pages/matches.vue')},
       { path: '/alreadyMatched', name: 'alreadyMatched', component: () =>import('../pages/AlreadyMatched.vue')},
+      { path: '/chat', name: 'chat', component: () =>import('../pages/TestChat.vue')},
 
     ]
   })

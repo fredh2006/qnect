@@ -3,10 +3,22 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const http = require("http");
+const { Server } = require("socket.io");
 const mongoose = require("mongoose");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const mongoURI = process.env.MONGO_URI;
+
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+
+
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log("MongoDB connected");
@@ -16,6 +28,11 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
   });
 app.use(bodyParser.json());
 app.use(cors());
+
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 const personSchema = new mongoose.Schema({
   name: { type: String, required: true },
   about: { type: String, required: true },
@@ -81,7 +98,7 @@ app.post("/api/person/:id/match", (req, res) => {
     if (!matchId) {
       return res.status(400).send({ success: false, message: "Match ID is required" });
     }
-  
+    
     Person.findById(personId)
       .then(person => {
         if (!person) {
@@ -243,8 +260,33 @@ app.get("/api/person/:id/matches", async (req, res) => {
       res.status(500).send({ success: false, message: "Error retrieving emails", error: err });
     });
 });
-  
-  
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+
+
+io.on("connection", (socket) => {
+  console.log("A user connected:", socket.id);
+
+  // Example: A "joinRoom" event for private/group chat rooms
+  socket.on("joinRoom", (roomName) => {
+    socket.join(roomName);
+    console.log(`User ${socket.id} joined room: ${roomName}`);
+  });
+
+  // Example: A "chatMessage" event
+  socket.on("chatMessage", (data) => {
+    // `data` could be { room: 'someRoom', msg: 'Hello!' }
+    console.log("Received chatMessage:", data, socket.id);
+    // Emit the message to everyone in the specified room
+    io.to(data.room).emit("chatMessage", {
+      senderId: socket.id,
+      msg: data.msg,
+      timestamp: new Date(),
+    });
+  });
+
+  // Handle disconnection
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
+  });
 });
+  
+
