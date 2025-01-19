@@ -496,11 +496,58 @@ export default {
 */
 
 .recorder-section {
-  background-color: rgba(255, 255, 255, 0.7);
-  padding: 10px;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 16px;
+  border-radius: 12px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(255, 111, 97, 0.2);
+  box-shadow: 0 4px 15px rgba(27, 38, 59, 0.1);
+  margin-bottom: 16px;
+  border: 1px solid rgba(27, 38, 59, 0.1);
+}
+
+.recorder-section h2 {
+  color: #1b263b;
+  font-size: 1rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.recorder-section button {
+  padding: 8px 12px;
+  margin: 0 6px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(45deg, #1b263b, #2d3f59);
+  color: #ff6f61;
+  box-shadow: 0 2px 8px rgba(27, 38, 59, 0.2);
+}
+
+.recorder-section button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(27, 38, 59, 0.3);
+  background: linear-gradient(45deg, #2d3f59, #1b263b);
+}
+
+.recorder-section button.recording {
+  background: linear-gradient(45deg, #ff6f61, #ff8a7f);
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 111, 97, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 111, 97, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 111, 97, 0);
+  }
 }
 
 .chat-input {
