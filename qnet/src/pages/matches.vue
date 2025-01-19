@@ -191,6 +191,7 @@
           });
       },
       likePerson(likedId) {
+  // POST request for liking the person
   axios
     .post(`http://localhost:3000/api/person/${this.userId}/like`, {
       likedId,
@@ -198,6 +199,7 @@
     .then((response) => {
       if (response.data.success) {
         this.notification = "You liked someone!";
+        
         // Remove the liked person from the carousel
         this.people = this.people.filter(person => person._id !== likedId);
         
@@ -210,12 +212,34 @@
         setTimeout(() => {
           this.notification = "";
         }, 3000);
+        
+        // Post a fixed match score (e.g., 85%)
+        this.postMatchScore(likedId, 85); // Change 85 to your desired score
       } else {
         console.error("Error liking person:", response.data.message);
       }
     })
     .catch((error) => {
       console.error("Error liking person:", error);
+    });
+},
+
+// Method to post match score
+postMatchScore(likedId, matchScore) {
+  axios
+    .post(`http://localhost:3000/api/person/${this.userId}/matchscore`, {
+      likedId,
+      matchScore,
+    })
+    .then((response) => {
+      if (response.data.success) {
+        console.log("Match score posted successfully");
+      } else {
+        console.error("Error posting match score:", response.data.message);
+      }
+    })
+    .catch((error) => {
+      console.error("Error posting match score:", error);
     });
 },
 
